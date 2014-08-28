@@ -1,0 +1,65 @@
+<!-- build:include:deploy template_header.html -->
+<!-- /build -->
+<!-- build:include:default dist_header.html -->
+<!-- /build -->
+<!-- build:remove -->
+<!DOCTYPE html>
+<html lang="sk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title> </title>
+<link rel="stylesheet" type="text/css" href="crimemap-stat.css">
+<script src="../node_modules/d3/d3.js"></script>
+<script src="../node_modules/crossfilter/crossfilter.js"></script>
+<script src="../node_modules/topojson/topojson.js"></script>
+<script src="controls.js"></script>
+<script src="fileProgress.js"></script>
+<script src="indexingComponent.js"></script>
+<script src="title.js"></script>
+<script src="map.js"></script>
+<script src="barsy.js"></script>
+<script src="featureCharts.js"></script>
+<script src="sunburst.js"></script>
+<script src="listRecords.js"></script>
+<script src="crimemap-stat.js"></script>
+</head>
+<body>
+<!-- /build -->
+    <div id="stat-wrapper">
+        <div id="file_result"></div>
+        <div id="progress-info"></div>
+        <div id="title"></div>
+        <div id="charts-left" class="column">
+            <div id="map-chart" class="chart"></div>
+            <div id="sunburst" class="chart"></div>
+        </div>
+        <div id="charts-right" class="column">
+            <div id="barsy" class="chart"></div>
+            <div id="featureCharts" class="chart">
+                <div id="indexing"></div>
+
+            </div>
+        </div>
+        <div id="stat-footer">
+            <div class="column">
+                Copyright © 2014 Andrej Aláč, Miroslav Bimbo
+                &nbsp;&nbsp;&nbsp;<a href="https://github.com/crimemap/crimemap-stat">Zdrojový kód</a>
+                &nbsp;&nbsp;&nbsp;<a id="download-link">Export dát CSV</a>
+            </div>
+            <script>
+                d3.select("#download-link")
+                   .attr("href",function(){
+                    return (typeof DJANGO_STATIC_URL === "undefined"?"":DJANGO_STATIC_URL)+'podla_druhucsv_3dimTypeHierarchy.csv';
+                   });
+            </script>
+            <div class="column">
+                Použité zdroje dát:
+                &nbsp;&nbsp;&nbsp;<a href="http://www.minv.sk/?statistika-kriminality-v-slovenskej-republike-xml">Štatistika kriminality</a>
+                &nbsp;&nbsp;&nbsp;<a href="http://px-web.statistics.sk/PXWebSlovak/">Počty obyvateľov</a>
+                &nbsp;&nbsp;&nbsp;<a href="http://wiki.freemap.sk/HraniceAdministrativnychUzemi">Hranice krajov</a>
+            </div>
+        </div>
+    </div>
+<!-- build:include:deploy template_footer.html -->
+</body>
+</html>
+<!-- /build -->

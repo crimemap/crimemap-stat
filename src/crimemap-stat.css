@@ -1,0 +1,181 @@
+/* Copyright (C) 2014 Andrej Alac, Miroslav Bimbo
+*
+* This file is part of Crimemap.
+*
+* Crimemap is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Crimemap is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with Crimemap. If not, see <http://www.gnu.org/licenses/agpl-3.0.txt>.
+*/
+#stat-wrapper{
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 11px;
+    margin:1em;
+    padding:0;
+}
+
+#stat-wrapper a, #stat-wrapper a:active, #stat-wrapper a:visited, #stat-wrapper a:link {
+    color:black;
+}
+
+.axis text{
+    font-family: sans-serif; 
+}
+.hand:hover{cursor: pointer; cursor: hand; }
+text.focused, g.focused text{text-decoration: underline;}
+.chart { display: block; border-bottom: solid #000 0px; vertical-align: top; text-align: left;}
+.country, .region, .district {fill: none; stroke: #444; stroke-width: 1;  stroke-linejoin: round;}
+
+.column{
+    float:left;
+    width:600px;
+}
+g.inactive text,text.inactive{
+    fill:#aaa;
+}
+label.inactive{
+    color:#aaa;
+}
+#indexing label{
+    margin: 0.5em 1.5em;
+}
+path.active{
+  fill: url(#hash);
+}
+#sunburst path.active{
+    stroke: black;
+    stroke-width: 2;
+}
+#sunburst path.active[depth="d1"]{
+    stroke-width: 0;
+}
+rect{
+    stroke: #aaa;
+}
+#indexing{
+    text-align: center;
+    width: 600px;
+}
+
+#title {
+    text-align: center;
+    width: 600px;
+}
+#title div{
+    display: inline-block;
+    margin:0.2em 0.5em;
+}
+#title .feature, #title .value{
+    font-size: 15px;
+    margin: 0em 1em 0em 1em;
+}
+#title .container{
+    display: block;
+    margin: 0.5em 1em 0em 1em;
+}
+#title .subtitle{
+    margin: 0em 1em 1em 1em;
+}
+
+.district {stroke-width: 1; stroke-dasharray: 1,1;}
+.progress-meter .background { fill: #ccc;}
+.progress-meter .foreground { fill: #000;}
+
+#progress-info, .progress-info { display: inline-block; vertical-align: top;}
+
+.axis path, .axis line {
+    fill: none;
+    shape-rendering: crispedges;
+    stroke: #000000;
+}
+
+.background.bar {
+  fill: #ccc;
+}
+
+.foreground.bar {
+  fill: steelblue;
+}
+
+/* debug listrecords
+.props{
+    border: 1px solid #000000;
+    display: inline-block;
+    margin: 0;
+    max-height: 1.1em;
+    max-width: 100px;
+    overflow: hidden;
+    padding: 0;
+    width: 60px;
+}*/
+
+.icon-play{
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	border-left: 7px solid black;
+    cursor: pointer;
+    display:inline-block;
+}
+
+.icon-pause{
+    cursor: pointer;
+    display:inline-block;
+    border-radius: 50%;
+    background-color:black;
+    width:7px;
+    height:7px;
+    margin:3.5px 0;
+}
+
+.icon-help{
+    cursor: pointer;
+    display:inline-block;
+    width:14px;
+    height:14px;
+    margin-left: 9px;
+}
+
+.icon-cancel{
+    cursor: pointer;
+    display:inline-block;
+    width:14px;
+    height:14px;
+}
+.disabledInnerMain{
+    opacity:0.2;
+    pointer-events:none;
+}
+
+.icon{
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+.helpWindow{
+    background-color:white;
+    position:absolute;
+    z-index:1000;
+    overflow: hidden;
+    font-size:11px;
+}
+
+.helpWindow.active{
+    overflow: auto;
+}
+
+.helpWindow p{
+    margin:1em 1em 0em 1em;
+}
+
+#stat-footer{
+    margin:1em;
+    clear:both;
+}
