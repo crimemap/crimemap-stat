@@ -41,7 +41,7 @@ var features=["Zistené činy", "Objasnené činy", "Spôsobená škoda (tisíc 
     ratioFeatures=["Objasnenosť (%)","Vplyv alkoholu (% objasených t.č.)","Vplyv drog (% objasených t.č.)","Maloletý páchateľ (% objasených t.č.)","Mladistvý páchateľ (% objasených t.č.)"],
     ratioFeaturesTitles=["Objasnenosť (%)","Vplyv alkoholu (% objasených t.č.)","Vplyv drog (% objasených t.č.)","Maloletý páchateľ (% objasených t.č.)","Mladistvý páchateľ (% objasených t.č.)"],
     ratioFeaturesSet = d3.set(ratioFeatures),
-    types=["Vraždy", "Lúpeže", "Násilie na verej. činit.", "Úmyslené ublíženie na zdraví", "Organizovaný zločin", "Iná násilná  kriminalita", "Znásilnenie", "Pohlavné zneužívanie", "Obchodovanie s ľuďmi", "Iná mravnostná  kriminalita", "Krádeže vlámaním", "Krádeže ostatné", "Ostatné majetkové", "Iná majetková kriminalita", "Výtržníctvo", "Požiare a výbuchy", "Drogy", "Nedovolené ozbrojovanie", "Iná ostatná  kriminalita", "Dopravné nehody cestné", "Ohroz. pod vplyvom návyk.látok", "Vojenské a proti republike", "Iná zostávajúca kriminalita", "Skrátenie dane", "Krádež", "Ochrana meny", "Ohroz. devízového hospod.", "Korupcia", "Sprenevera", "Podvod", "Poruš.autorských práv", "Iná ekonomická kriminalita"],
+    types=["Vraždy", "Lúpeže", "Násilie na verej. činit.", "Úmyslené ublíženie na zdraví", "Organizovaný zločin", "Iná násilná  kriminalita", "Znásilnenie", "Pohlavné zneužívanie", "Obchodovanie s ľuďmi", "Iná mravnostná  kriminalita", "Krádeže vlámaním", "Krádeže ostatné", "Ostatné majetkové", "Výtržníctvo", "Požiare a výbuchy", "Drogy", "Nedovolené ozbrojovanie", "Iná ostatná  kriminalita", "Dopravné nehody cestné", "Ohroz. pod vplyvom návyk.látok", "Vojenské a proti republike", "Iná zostávajúca kriminalita", "Skrátenie dane", "Krádež", "Ochrana meny", "Ohroz. devízového hospod.", "Korupcia", "Sprenevera", "Podvod", "Poruš.autorských práv", "Iná ekonomická kriminalita"],
     typeGroups=["Násilná kriminalita", "Organizovaný zločin", "Mravnostná kriminalita", "Majetková kriminalita", "Ostatná kriminalita", "Zostávajúca kriminalita", "Ekonomická kriminalita"],
     years=["2010", "2012", "2007", "2013", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2009", "2011", "2008"],
     regions=["BL", "TT", "TN", "NR", "ZA", "BB", "PO", "KE"],
@@ -57,16 +57,17 @@ var features=["Zistené činy", "Objasnené činy", "Spôsobená škoda (tisíc 
     population ={
         "SR":{"1997":5387650,"1998":5393382,"1999":5398657,"2000":5402547,"2001":5378951,"2002":5379161,"2003":5380053,"2004":5384822,"2005":5389180,"2006":5393637,"2007":5400998,"2008":5412254,"2009":5424925,"2010":5435273,"2011":5404322,"2012":5410836,"2013":5415949},
         "BL":{"1997":618673,"1998":617599,"1999":616982,"2000":617049,"2001":599042,"2002":599736,"2003":599787,"2004":601132,"2005":603699,"2006":606753,"2007":610850,"2008":616578,"2009":622706,"2010":628686,"2011":606537,"2012":612682,"2013":618380},
-	"TT":{"1997":549621,"1998":550652,"1999":551287,"2000":551441,"2001":550918,"2002":550911,"2003":552014,"2004":553198,"2005":554172,"2006":555075,"2007":557151,"2008":559934,"2009":561525,"2010":563081,"2011":555509,"2012":556577,"2013":557608},
-	"TN":{"1997":610349,"1998":609739,"1999":609288,"2000":608786,"2001":604917,"2002":603494,"2003":602166,"2004":601392,"2005":600386,"2006":599847,"2007":599831,"2008":599859,"2009":599214,"2010":598819,"2011":594186,"2012":593159,"2013":592394},
+        "TT":{"1997":549621,"1998":550652,"1999":551287,"2000":551441,"2001":550918,"2002":550911,"2003":552014,"2004":553198,"2005":554172,"2006":555075,"2007":557151,"2008":559934,"2009":561525,"2010":563081,"2011":555509,"2012":556577,"2013":557608},
+        "TN":{"1997":610349,"1998":609739,"1999":609288,"2000":608786,"2001":604917,"2002":603494,"2003":602166,"2004":601392,"2005":600386,"2006":599847,"2007":599831,"2008":599859,"2009":599214,"2010":598819,"2011":594186,"2012":593159,"2013":592394},
         "NR":{"1997":717241,"1998":716560,"1999":715841,"2000":714602,"2001":712312,"2002":711002,"2003":709752,"2004":709350,"2005":708498,"2006":707305,"2007":706758,"2008":706375,"2009":705661,"2010":704752,"2011":689564,"2012":688400,"2013":686662},
         "ZA":{"1997":689504,"1998":691201,"1999":692582,"2000":693853,"2001":692434,"2002":693041,"2003":693499,"2004":694129,"2005":694763,"2006":695326,"2007":695698,"2008":696347,"2009":697502,"2010":698274,"2011":689601,"2012":690121,"2013":690420},
-	"BB":{"1997":663845,"1998":663492,"1999":662932,"2000":662077,"2001":661343,"2002":660110,"2003":658953,"2004":658368,"2005":657119,"2006":655762,"2007":654668,"2008":653697,"2009":653186,"2010":652218,"2011":660128,"2012":658490,"2013":656813},
-	"PO":{"1997":777301,"1998":780875,"1999":784451,"2000":787483,"2001":791335,"2002":793182,"2003":794814,"2004":796745,"2005":798596,"2006":800483,"2007":801939,"2008":803955,"2009":807011,"2010":809443,"2011":815806,"2012":817382,"2013":818916},
-	"KE":{"1997":761116,"1998":763264,"1999":765294,"2000":767256,"2001":766650,"2002":767685,"2003":769068,"2004":770508,"2005":771947,"2006":773086,"2007":774103,"2008":775509,"2009":778120,"2010":780000,"2011":792991,"2012":794025,"2013":794756}
+        "BB":{"1997":663845,"1998":663492,"1999":662932,"2000":662077,"2001":661343,"2002":660110,"2003":658953,"2004":658368,"2005":657119,"2006":655762,"2007":654668,"2008":653697,"2009":653186,"2010":652218,"2011":660128,"2012":658490,"2013":656813},
+        "PO":{"1997":777301,"1998":780875,"1999":784451,"2000":787483,"2001":791335,"2002":793182,"2003":794814,"2004":796745,"2005":798596,"2006":800483,"2007":801939,"2008":803955,"2009":807011,"2010":809443,"2011":815806,"2012":817382,"2013":818916},
+        "KE":{"1997":761116,"1998":763264,"1999":765294,"2000":767256,"2001":766650,"2002":767685,"2003":769068,"2004":770508,"2005":771947,"2006":773086,"2007":774103,"2008":775509,"2009":778120,"2010":780000,"2011":792991,"2012":794025,"2013":794756}
     },
     records,all,charts,formatNumber= d3.format(",d"),    
     fp = fileProgress({dataFile: dataFile}),
+    featureSelection,
     pids = 0,
     colors = d3.scale.category20(),
     colorsDefined = ["#A8B4FF","#6CF2FF","#E8DE6B","#D48AE8","#6DCC82","#FFCC6C","#E86C62"];
@@ -76,13 +77,6 @@ var features=["Zistené činy", "Objasnené činy", "Spôsobená škoda (tisíc 
     
     var absoluteElement;
     
-    function featureSelection(){
-        var actives = d3.selectAll("#featureCharts").select("svg").selectAll(".active");
-        if(actives.empty()){
-            return features[0];
-        }
-        else return actives.datum().key;
-    }
     
     function featureTitleSelection(){
         if(featuresSet.has(featureSelection())){
@@ -133,7 +127,7 @@ function onLoadWithDelay(data){
 
 function onLoad(data){
     
-   
+   var typeHierarchyStruct = {};
     
     data.forEach(function(d, i) {
         
@@ -150,13 +144,15 @@ function onLoad(data){
         
         d.typeGroup = +d.typeGroup;
         d.typg = typeGroups[d.typeGroup];
+        
+        typeHierarchyStruct[d.type] = d.typeGroup;
 
         for (var j = 0; j < features.length; j++) { 
                d[features[j]] = +d["value"+j] | 0;
                delete d["value"+j];
         }
         
-    });   
+    });
     
     function initialization() {
         function computePop(p){
@@ -175,6 +171,12 @@ function onLoad(data){
                 p.needToComputePop = false;
                 return popu;
             }
+        }
+        function divideDelimit(numerator,denominator){
+            if(denominator===0){
+                return +(numerator>0);
+            }
+            return numerator/denominator;
         }
         var p = {
             getIndex : function(feature){
@@ -253,11 +255,21 @@ function onLoad(data){
             p.typeGroups[j]=0;
         }
         
-        p["Objasnenosť (%)"] = function(){return p["Objasnené činy"]/p["Zistené činy"] || 0;};
-        p["Vplyv alkoholu (% objasených t.č.)"] = function(){return p["Vplyv alkoholu (počet činov)"]/p["Objasnené činy"] || 0;}; 
-        p["Vplyv drog (% objasených t.č.)"] = function(){return p["Vplyv drog (počet činov)"]/p["Objasnené činy"] || 0;};
-        p["Maloletý páchateľ (% objasených t.č.)"] = function(){return p["Maloletý páchateľ (počet činov)"]/p["Objasnené činy"] || 0;};
-        p["Mladistvý páchateľ (% objasených t.č.)"] = function(){return p["Mladistvý páchateľ (počet činov)"]/p["Objasnené činy"] || 0;};
+        p["Objasnenosť (%)"] = function(){
+            return divideDelimit((p["Objasnené činy"]+p["Dodatočne objasnené činy"]),p["Zistené činy"]);
+        };
+        p["Vplyv alkoholu (% objasených t.č.)"] = function(){
+            return divideDelimit(p["Vplyv alkoholu (počet činov)"],(p["Objasnené činy"]+p["Dodatočne objasnené činy"]));
+        };
+        p["Vplyv drog (% objasených t.č.)"]  = function(){
+            return divideDelimit(p["Vplyv drog (počet činov)"],(p["Objasnené činy"]+p["Dodatočne objasnené činy"]));
+        };
+        p["Maloletý páchateľ (% objasených t.č.)"] = function(){
+            return divideDelimit(p["Maloletý páchateľ (počet činov)"],(p["Objasnené činy"]+p["Dodatočne objasnené činy"]));
+        };
+        p["Mladistvý páchateľ (% objasených t.č.)"] = function(){
+            return divideDelimit(p["Mladistvý páchateľ (počet činov)"],(p["Objasnené činy"]+p["Dodatočne objasnené činy"]));
+        };
         
         return p;
     }
@@ -294,10 +306,8 @@ function onLoad(data){
 
 
     var records = crossfilter(data),
-    all = records.groupAll().reduce(reduceAdd(),reduceRemove(),initialization).value(),
-//    allcount = records.groupAll(),
+    all = records.groupAll().reduce(reduceAdd(),reduceRemove(),initialization).value();
     
-    fil=[];
     var yearDim= records.dimension(function(d) {return d.yeari;}); 
     var typeDim = records.dimension(function(d) {return d.type;}); 
     var typeGroupDim = records.dimension(function(d) {return d.typeGroup;});
@@ -307,17 +317,21 @@ function onLoad(data){
     var typesGroup = typeDim.group().reduce(reduceAdd(),reduceRemove(),initialization);
     var regionGroup = regionDim.group().reduce(reduceAdd(),reduceRemove(),initialization);
     var typeGroupsGroup = typeGroupDim.group().reduce(reduceAdd(),reduceRemove(),initialization);
-//    hierarchyGroup = groupBy2DimsOnValue(typeGroupDim,"typ"),
-//    yearToRegionGroup = groupBy2DimsOnValue(yearDim,"region",features[0]),
     
-    fil.push(regionDim);
-    fil.push(yearDim);
-    fil.push(typeGroupDim);
-    fil.push(typeDim);
-    
-    indexingComponent(renderAll);
+
+    var indexingComponentVar = indexingComponent(renderAll)
+                                .indexingSelection(indexingSelection);
+                        
     absoluteElement = d3.select("label.active");
 
+    var featureChartsVar = featureCharts()
+                .group(all)
+                .labels(features.concat(ratioFeatures))
+                .renderFunction(renderAll)
+                .formatter(formatter);
+    
+    featureSelection = featureChartsVar.feature;
+    
     var titleVar = title()
             .group(all)
             .labelsType(types)
@@ -329,6 +343,8 @@ function onLoad(data){
             .featureTitle(featureTitleSelection)
             .formatter(formatter)
             .indexing(indexingSelection);
+
+    featureChartsVar.texts(titleVar.texts());
     
     var charts = [
         map()
@@ -362,70 +378,48 @@ function onLoad(data){
                 .labels0(typeGroups)
                 .labels1(types)
                 .feature(featureSelection)
+                .typeHierarchyStruct(typeHierarchyStruct)
                 .renderFunction(renderAll)
                 .coloring(coloring)
                 .formatter(formatter)
-                .texts(titleVar.texts()),
+                .texts(titleVar.texts())
         
     ];
 
     var chart = d3.selectAll(".chart").data(charts);
+
+
+    var urlResolverVar = urlResolver()
+                .components(charts.concat(indexingComponentVar,featureChartsVar))
+                .dimension(yearDim);
+        
     
-    var featureChartsVar = featureCharts()
-                .group(all)
-                .feature(featureSelection)
-                .renderFunction(renderAll)
-                .formatter(formatter)
-                .texts(titleVar.texts());
 
     function render(method) { 
         d3.select(this).call(method);
     }
     function renderAll() {
         titleVar();
-        var yearasd = yearDim;
         chart.each(render);
-        //titleVar();
         featureChartsVar();
-//        d3.select("#active").text(formatNumber(allcount.value()));
+        urlResolverVar();
     }
-    
-//    d3.selectAll("#indexing label").on("click",renderAll);
+   
     
     window.filter = function(filters) {
         for(var i=0;i<filters.length;i++){
-            fil[i].filter(filters[i]);
+            fil[i](filters[i]);
         }
         renderAll();
     };
-
-    //renderAll();
-    
+   
     window.reset = function(i) { charts[i].filter(null); renderAll();};   
     
-//    d3.selectAll("#total").text(formatNumber(records.size())); 
-    
-    
-//    fp.done();
-    
+    urlResolverVar.decodeUrl();
     renderAll();
 
     fp.done();
 
-//window.filter([4,5,3,11]);
-
-//    var x = 0;
-//    var sortedyears = years.slice(0).sort();
-//    var intervalID = setInterval(function () {
-//
-//       window.filter([4,
-//           years.indexOf(sortedyears[x])
-//           ,2,null]);
-//
-//       if (++x === years.length) {
-//           window.clearInterval(intervalID);
-//       }
-//    }, 300);
     
 }
 }

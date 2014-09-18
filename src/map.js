@@ -17,7 +17,7 @@
 */
 function map(){
 var group,dimension,regions,labels,renderFunction,feature,coloring,indexingSelection,formatter,all,controlsObj,data,texts;
-
+var activeRecords,paramName="m";
 var width = 600,height = 200, scaleFactor= 3400;
  
 var projection = d3.geo.mercator() 
@@ -82,14 +82,6 @@ var color2 = d3.scale.linear()
         .range(["white","#444"]); 
 //        .range(["#F5F8FB","#444"]);    
 
-//svg.append("text")
-//        .attr("x",450)
-//        .attr("y",160)
-//        .attr("id","play")
-//        .text("play")
-//        .classed({"hand":true})
-//        .on("click",play);
-
 //   <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
 var gradientWidth=100;
 var gradientGroup = svg.append("g")
@@ -143,11 +135,32 @@ function chart(){
 //                return d.value.getFeatureByIndexing(feature());
 //            }),
 
+        for(var i=0;i<kraje.length;i++){
+            if(kraje[i].id===dataTmp[i].value.regs.keys()[0]){
+                kraje[i].properties.data = dataTmp[i];
+                continue;
+            }
+            for(var j=0;j<dataTmp.length;j++){
+                if(kraje[i].id===dataTmp[j].value.regs.keys()[0]){
+                    kraje[i].properties.data = dataTmp[i];
+                    break;
+                }
+            }
+            if(!kraje[i].properties.data){
+                kraje[i].properties.data = dataTmp[i];
+            }
+        }
+        
+        
+        data = kraje.slice(0);
+        
+        data.sort(function(a,b){
+            return b.properties.data.value.getFeatureByIndexing(feature())-a.properties.data.value.getFeatureByIndexing(feature());
+        });
+        
         var minValue = 0;
 
-        var maxValue = d3.max(dataTmp, function(d) {
-                return d.value.getFeatureByIndexing(feature());
-                });
+        var maxValue = data[0].properties.data.value.getFeatureByIndexing(feature());
                 
         endText.text(format(maxValue));
         startText.text(format(minValue));
@@ -157,25 +170,6 @@ function chart(){
     //        .range(["white", data[0].value.typeGroups.keys().length===1?coloring(data[0].value.typeGroups.keys()[0]):"black"]);
 
         color2.domain([minValue,maxValue]);
-
-        for(var i=0;i<kraje.length;i++){
-            if(kraje[i].id===dataTmp[i].value.regs.keys()[0]){
-                kraje[i].properties.data = dataTmp[i];
-                continue;
-            }
-            for(var j=0;j<dataTmp.length;j++)
-                if(kraje[i].id===dataTmp[j].value.regs.keys()[0]){
-                    kraje[i].properties.data = dataTmp[i];
-                    break;
-                }
-        }
-        
-        
-        data = kraje.slice(0);
-        
-        data.sort(function(a,b){
-            return b.properties.data.value.getFeatureByIndexing(feature())-a.properties.data.value.getFeatureByIndexing(feature());
-        });
 
         var legend = svg.selectAll(".legend0")
                 .data(data,function(d){
@@ -250,10 +244,12 @@ function chart(){
 //            return color(d.properties.data.value.getFeatureByIndexing(feature()));
 //        });
 
-        var activeRecords = all.regs.keys();
+        activeRecords = all.regs.keys();
         if(activeRecords.length<regions.length){
             deactivateAll();
             activateArr(activeRecords);
+        }else{
+            removeActsAll();
         }
 
         var active = svg.select("path.active").classed({"active":true});
@@ -322,43 +318,7 @@ function chart(){
         removeActsAll();
         chart.filter(null);
         renderFunction();
-    }
-    
-//    function deactivate(d){
-//            
-//            svg.selectAll("g.legend0").classed({"inactive":false});
-//            g.selectAll("path").classed({"inactive":false});
-//            
-//            svg.select("g.legend0#l"+d.properties.data.key).classed({"active":false});
-//            g.select("path#"+d.id).classed({"active":false});
-//            chart.filter(null);
-//        }
-//        
-//    function activate(d){
-//            svg.selectAll("g.legend0").classed({"active":false,"inactive":true});
-//            g.selectAll("path").classed({"active":false,"inactive":true});
-//            
-//            svg.select("g.legend0#l"+d.properties.data.key).classed({"active":true,"inactive":false});
-//            g.select("path#"+d.id).classed({"active":true,"inactive":false});
-////            
-////            defs.select("#hashbackground")
-////                .style("fill", color(active.datum().properties.data.value.getFeatureByIndexing(feature())));
-////            active.style("fill","url(#hash)");
-//            
-//            chart.filter(regions.indexOf(d.id));
-//        }
-        
-//        function onClick(d,i) {
-//            var wasActive = d3.select(this).classed("active");
-//            if(wasActive){
-//                deactivate(d);
-//            }else{
-//                activate(d);
-//            }
-//            renderFunction();
-//
-//        }  
-    
+    }    
     
     chart.dimension = function(_) {
       if (!arguments.length) return dimension;
@@ -426,6 +386,24 @@ function chart(){
         texts = _;
         return chart;
     };
+    
+    
+    chart.pushParam = function(params) {
+        if(activeRecords.length===1){
+            params[paramName] = regions.indexOf(activeRecords[0]);
+        }
+        return params;
+    };
+    
+    chart.applyParam = function(params) {
+        var tmpNumber = parseInt(params[paramName],10);
+        if(typeof tmpNumber === "number" && isFinite(tmpNumber) && tmpNumber >= 0 && tmpNumber <= regions.length){
+            chart.filter(tmpNumber);
+        }else{
+            chart.filter(null);
+        }
+    };
+    
 
     return chart;
 }

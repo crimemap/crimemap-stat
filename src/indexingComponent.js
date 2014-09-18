@@ -17,7 +17,9 @@
 */
 function indexingComponent(renderFunction){
     
-    var div = d3.select("#indexing");
+    var div = d3.select("#indexing"),
+            indexingSelection,
+            paramName="i";
     
     var absolute = div.append("label")
             .attr("id","absolute")
@@ -25,29 +27,46 @@ function indexingComponent(renderFunction){
             .text("Absolútna hodnota")
             .on("click",onClick);
     
-//    absolute.append("input")
-//            .attr("type","radio")
-//            .attr("name","indexing")
-//            .attr("value","absolute");
-    
-    
     var index = div.append("label")
             .attr("id","index")
             .classed({inactive:true,hand:true})
             .text("Hodnota na 1000 obyvateľov za rok")
             .on("click",onClick);
     
-//    index.append("input")
-//            .attr("type","radio")
-//            .attr("name","indexing")
-//            .attr("value","index")
-//            .attr("checked","checked");
-    
-    
+    function chart(){
+        
+    }
     
     function onClick(){
         div.selectAll("label").classed({"active":false,"inactive":true});
         d3.select(this).classed({"active":true,"inactive":false});
         renderFunction();
     }
+    
+    
+    chart.pushParam = function(params) {
+        if(indexingSelection()==="index"){
+            params[paramName] = "1";
+        }
+        return params;
+    };
+    
+    chart.applyParam = function(params) {
+        if(!params[paramName]){
+            index.classed({"active":false,"inactive":true});
+            absolute.classed({"active":true,"inactive":false});    
+        }else if(+params[paramName] === 1){
+            absolute.classed({"active":false,"inactive":true});
+            index.classed({"active":true,"inactive":false});
+        }
+    };
+    
+    chart.indexingSelection = function(_) {
+        if (!arguments.length)
+            return indexingSelection;
+        indexingSelection = _;
+        return chart;
+    };
+    
+    return chart;
 }

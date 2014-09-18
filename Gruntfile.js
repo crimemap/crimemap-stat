@@ -16,6 +16,7 @@ grunt.initConfig({
                 src: ['node_modules/d3/d3.js',
                     'node_modules/crossfilter/crossfilter.js',
                     'node_modules/topojson/topojson.js',
+                    '<%=pkg.src%>/urlResolver.js',
                     '<%=pkg.src%>/controls.js',
                     '<%=pkg.src%>/fileProgress.js',
                     '<%=pkg.src%>/indexingComponent.js',
@@ -49,7 +50,8 @@ grunt.initConfig({
                 {expand: true, flatten: true,
                  src: ['<%=pkg.dest%>/<%=pkg.name%>.min.*.css',
                     '<%=pkg.dest%>/<%=pkg.name%>.min.*.js',
-                    '<%=pkg.dest%>/images/*'],
+                    '<%=pkg.dest%>/images/*',
+                    '<%=pkg.dest%>/*.csv'],
                 dest: '<%=pkg.deploy_folder%>/'}
              ]
         }
@@ -64,9 +66,10 @@ grunt.initConfig({
 
     cssmin: {
         compress: {
-            files: {
-                '<%=pkg.dest%>/<%=pkg.name%>.min.css': ['<%=pkg.dest%>/<%=pkg.name%>.css']
-            }
+            files: [
+                {dest: '<%=pkg.dest%>/<%=pkg.name%>.min.css', src: '<%=pkg.dest%>/<%=pkg.name%>.css'},
+                {src: '../../crimemap/static/crimemap/css/main.css', dest: '<%=pkg.dest%>/main.css'}
+            ]
         }
     },
 
@@ -86,7 +89,7 @@ grunt.initConfig({
         build: {
             phases: [
                 { files: ['<%=pkg.dest%>/*.min.js','<%=pkg.dest%>/*.min.css'], references: '<%=pkg.html_deploy_folder%>/<%=pkg.name%>.html'},
-                { files:['<%=pkg.dest%>/*.csv'], references: '<%=pkg.dest%>/*.js'}
+                { files:['<%=pkg.dest%>/*.csv'], references: ['<%=pkg.dest%>/*.js','<%=pkg.html_deploy_folder%>/<%=pkg.name%>.html']}
             ],
             versionFile: '<%=pkg.dest%>/<%=pkg.name%>-version.json'
         }

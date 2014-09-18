@@ -22,7 +22,9 @@ function barsy() {
     var margin = {top: 10, right: 10, bottom: 20, left: 60},
     width = 600 - margin.left - margin.right,
     height = 100 - margin.top - margin.bottom,
-    ticksize = 20;
+    ticksize = 20,
+    activeRecords,
+    paramName='y';
 
     var d3node = d3.select("#barsy");
 
@@ -139,7 +141,7 @@ function barsy() {
                 .transition()
                 .attr("d", barPath);
         
-        var activeRecords = all.years.keys();
+        activeRecords = all.years.keys();
         if(activeRecords.length<labels.length){
             deactivateAll();
             activateArr(activeRecords);
@@ -273,6 +275,24 @@ function barsy() {
             return texts;
         texts = _;
         return chart;
+    };
+    
+    
+    
+    chart.pushParam = function(params) {
+        if(activeRecords.length===1){
+            params[paramName] = labels.indexOf(activeRecords[0]);
+        }
+        return params;
+    };
+    
+    chart.applyParam = function(params) {
+        var tmpNumber = parseInt(params[paramName],10);
+        if(typeof tmpNumber === "number" && isFinite(tmpNumber) && tmpNumber >= 0 && tmpNumber <= labels.length){
+            chart.filter(tmpNumber);
+        }else{
+            chart.filter(null);
+        }
     };
     
     return chart;

@@ -20,26 +20,38 @@ function controls(d3node,fields,step,finish){
     var playActive=false;
     var intervalID;
     var x = 0;
+    var charts,allControls;
 
+    function checkVariables(){
+        if(!charts){
+            charts = d3.selectAll(".chart").selectAll("svg");
+            allControls = d3.selectAll(".controls");
+        }
+    }
 
 
     function finishInternal(){
-        d3.selectAll(".controls").classed({"disabledInnerMain":false});
+        checkVariables();
+        allControls.classed({"disabledInnerMain":false});
+        charts.classed({"disabledEvents":false});
         x = 0;
         finish();
     }
 
     function pause(){
+        checkVariables();
         if(playActive){
             playActive=false;
             window.clearInterval(intervalID);
-            d3.selectAll(".controls").classed({"disabledInnerMain":false});
+            allControls.classed({"disabledInnerMain":false});
+            charts.classed({"disabledEvents":false});
             playDiv.style("display","inline-block");
             pauseDiv.style("display","none");
         }
     }
 
     function play(){
+        checkVariables();
         var timeout = 1000;
 
         function runPlay() {
@@ -59,7 +71,8 @@ function controls(d3node,fields,step,finish){
             runPlay();
             if(x !== fields.length){
                 intervalID = setInterval(runPlay, timeout);
-                d3.selectAll(".controls").classed({"disabledInnerMain":true});
+                allControls.classed({"disabledInnerMain":true});
+                charts.classed({"disabledEvents":true});
                 controlsDiv.classed({"disabledInnerMain":false});
                 playDiv.style("display","none");
                 pauseDiv.style("display","inline-block");
@@ -68,11 +81,13 @@ function controls(d3node,fields,step,finish){
     }
 
     function cancel(){
+        checkVariables();
         pause();
         finishInternal();
     }
 
     function help(){
+        checkVariables();
         var duration = 1500;
         if(helpWindow.classed("active")){
             helpWindow
@@ -80,12 +95,14 @@ function controls(d3node,fields,step,finish){
             .duration(duration)
                 .style({"width":0+"px","height":helpWindowHeight+"px"});
 
-            d3.selectAll(".controls").classed({"disabledInnerMain":true});
+            allControls.classed({"disabledInnerMain":true});
+            charts.classed({"disabledEvents":true});
             helpWindow.classed({"active":false});
 
             setTimeout(function(){
 
-                    d3.selectAll(".controls").classed({"disabledInnerMain":false});
+                    allControls.classed({"disabledInnerMain":false});
+                    charts.classed({"disabledEvents":false});
                 },duration+20);
 
         }else{
@@ -95,11 +112,12 @@ function controls(d3node,fields,step,finish){
             .style({"width":helpWindowWidth+"px","height":helpWindowHeight+"px"})
             .style({"display":"block"});
 
-            d3.selectAll(".controls").classed({"disabledInnerMain":true});
+            allControls.classed({"disabledInnerMain":true});
 
             setTimeout(function(){
                     helpWindow.classed({"active":true});
-                    d3.selectAll(".controls").classed({"disabledInnerMain":false});
+                    allControls.classed({"disabledInnerMain":false});
+                    charts.classed({"disabledEvents":false});
                 },duration+20);
 
         }
@@ -151,6 +169,15 @@ function controls(d3node,fields,step,finish){
             paragraphs.text(function(d){
                 return d;
             });
+        },
+        hide:function(){
+            controlsDiv.style("display","none");
+        },
+        show:function(){
+            controlsDiv.style("display","");
+        },
+        updateFields:function(fieldsNew){
+            fields = fieldsNew;
         }
     };
 

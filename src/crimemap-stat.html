@@ -11,6 +11,7 @@
 <script src="../node_modules/d3/d3.js"></script>
 <script src="../node_modules/crossfilter/crossfilter.js"></script>
 <script src="../node_modules/topojson/topojson.js"></script>
+<script src="urlResolver.js"></script>
 <script src="controls.js"></script>
 <script src="fileProgress.js"></script>
 <script src="indexingComponent.js"></script>
@@ -39,8 +40,10 @@
 
             </div>
         </div>
+        <div id="urlResolver"></div>
         <div id="stat-footer">
             <div class="column">
+                <!-- <a href="javascript:void(0)" onclick="filter([1,2,3,null])">test</a>-->
                 Copyright © 2014 Andrej Aláč, Miroslav Bimbo
                 &nbsp;&nbsp;&nbsp;<a href="https://github.com/crimemap/crimemap-stat">Zdrojový kód</a>
                 &nbsp;&nbsp;&nbsp;<a id="download-link">Export dát CSV</a>

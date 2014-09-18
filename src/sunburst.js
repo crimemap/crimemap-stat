@@ -27,9 +27,10 @@ function sunburst() {
     var dimension0,dimension1, 
         group0,group1,
         labels0,labels1, 
-        feature,renderFunction,coloring,formatter,format,all,
-        controlsObj,
-        data0;
+        feature,typeHierarchyStruct,renderFunction,coloring,formatter,format,all,
+        controlsObj0,controlsObj1,
+        data0,data1,
+        paramName0="g",paramName1="t";
 
 
     function active0(){
@@ -87,18 +88,21 @@ function sunburst() {
 
     function chart() {
 
-        if(!controlsObj){
-            controlsObj = controls(d3node,labels0,step,finish);
+        if(!controlsObj0){
+            controlsObj0 = controls(d3node,labels0,step0,finish0);
+            controlsObj1 = controls(d3node,labels1,step1,finish1);
         }
+        
         var helperText = [
                           "Aktuálny výber: "+texts.tp+". ",
-                          "Tento komponent slúži na porovnanie a filtráciu zločinnosti podľa typu zločinu. Ledenda na ľavej strane a vnútorné medzikružie reprezentujú skupiny typov kriminality, vonkajšie medzikružie a pravá strana legendy reprezentujú typy kriminality prislúchajúce jednotlivým skupinám. Štatistiku pre požadovanú skupinu alebo typ kriminality je možné získať prostredníctvom kliknutia medzikružie alebo legendu. Výber je možné zrušiť opätovným kliknutím na vybraný typ kriminality, alebo kliknutím na zrušenie filtra X.",
+                          "Tento komponent slúži na porovnanie a filtráciu zločinnosti podľa typu zločinu. Legenda na ľavej strane a vnútorné medzikružie reprezentujú skupiny typov kriminality, vonkajšie medzikružie a pravá strana legendy reprezentujú typy kriminality prislúchajúce jednotlivým skupinám. Štatistiku pre požadovanú skupinu alebo typ kriminality je možné získať prostredníctvom kliknutia na medzikružie alebo legendu. Výber je možné zrušiť opätovným kliknutím na vybraný typ kriminality, alebo kliknutím na zrušenie filtra X.",
                           "Hodnoty pre jednotivé typy kriminality sú reprezentované veľkosťou výseku medzikružia, kde väčší výsek znamená vyšší podiel daného typu kriminality na celkovej kriminalite. Pre všetky veličiny, ktoré nie sú uvádzané v percentách, teda väčší výsek znamená významnejší podiel daného typu kriminality na celkovej kriminalite. Pre veličiny, ktoré sú uvádzané v percentách, nemá veľkosť kruhového výseku štatistický význam.",
                           "Podrobné vysvetlivky k jednotlivým hlavným skupinám a typom kriminality sa nachádzajú v pomocníkovi.",
                           "Zobrazovaná štatistika: "+texts.finalTitle()[1],
                           texts.finalTitle()[0]
                           ];
-        controlsObj.setHelpertext(helperText);
+        controlsObj0.setHelpertext(helperText);
+        controlsObj1.setHelpertext(helperText);
 
         format = formatter(feature());
 
@@ -237,6 +241,15 @@ function sunburst() {
         }else{
             legend.selectAll(".legend0Values")
                     .text("");    
+        }
+        
+        if(!active0().empty()){
+            controlsObj0.hide();
+            controlsObj1.show();
+            controlsObj1.updateFields(data1);
+        }else{
+            controlsObj1.hide();
+            controlsObj0.show();
         }
 
     }
@@ -382,13 +395,19 @@ function sunburst() {
            
     }
 
-    function step(turn){
+    function step0(turn){
         //deactivateAll0();
         chart.filter0(data0[turn].key);
         renderFunction();
     }
+    
+    function step1(turn){
+        //deactivateAll0();
+        chart.filter1(labels1.indexOf(data1[turn].name));
+        renderFunction();
+    }
 
-    function finish(){
+    function finish0(){
         deactivateAll0();
         deactivateAll1();
         chart.filter0(null);
@@ -396,19 +415,13 @@ function sunburst() {
         onMouseout();
         renderFunction();
     }
-
-//    function labelMouseclick(d){
-//
-//        if(d.depth === 0){
-//            reset();
-//        } else if(d.depth === 1){
-//            action0(d);
-//        }else{
-//            action1(d);
-//        }
-//
-//        renderFunction();
-//    }
+    
+    function finish1(){
+        deactivateAll1();
+        chart.filter1(null);
+        onMouseout();
+        renderFunction();
+    }
     
     function pathMouseclick(d){
         
@@ -424,10 +437,10 @@ function sunburst() {
     }
     
     function redrawLegend1(d0){
-        var data =d0.children.slice(0).sort(function(a,b){return +(b.size)-(+a.size);});
+        data1 =d0.children.slice(0).sort(function(a,b){return +(b.size)-(+a.size);});
         var padding = d0.children.length*legendSpacing/2;
         var legend = svg.selectAll(".legend1")
-                    .data(data,function(d){
+                    .data(data1,function(d){
                                     return d.fullname;
                                 });
 
@@ -606,6 +619,13 @@ function sunburst() {
         return chart;
     };
     
+    chart.typeHierarchyStruct = function(_) {
+        if (!arguments.length)
+            return typeHierarchyStruct;
+        typeHierarchyStruct = _;
+        return chart;
+    };
+    
     chart.formatter = function(_) {
       if (!arguments.length) return formatter;
       formatter = _; return chart;
@@ -621,6 +641,42 @@ function sunburst() {
     chart.all = function(_) {
       if (!arguments.length) return all;
       all = _; return chart;
+    };
+
+
+    chart.pushParam = function(params) {
+        var activeRecords0 = all.typeGroups.keys();
+        if(activeRecords0.length===1){
+            params[paramName0] = activeRecords0[0];
+        }
+        var activeRecords1 = all.types.keys();
+        if(activeRecords1.length===1){
+            params[paramName1] = activeRecords1[0];
+        }
+        return params;
+    };
+    
+    chart.applyParam = function(params) {
+        var tmpNumber0= parseInt(params[paramName0],10);
+        var filtered0=false;
+        if(typeof tmpNumber0 === "number" && isFinite(tmpNumber0) && tmpNumber0 >= 0 && tmpNumber0 <= labels0.length){
+            chart.filter0(tmpNumber0);
+            filtered0=true;
+        }else{
+            chart.filter0(null);
+        }
+        
+        var tmpNumber1 = parseInt(params[paramName1],10);
+        if(typeof tmpNumber1 === "number" && isFinite(tmpNumber1) && tmpNumber1 >= 0 && tmpNumber1 <= labels1.length && 
+                (!filtered0 || typeHierarchyStruct[tmpNumber1]===tmpNumber0)){ // only filter1 is active, or filter1 is under filter0
+            chart.filter1(tmpNumber1);
+            if(!filtered0){
+                chart.filter0(typeHierarchyStruct[tmpNumber1]);
+            }
+        }else{
+            chart.filter1(null);
+        }
+        
     };
 
     return chart;

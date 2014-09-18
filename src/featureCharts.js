@@ -27,8 +27,10 @@ function featureCharts() {
             g,
             subcharts,
             renderFunction,
-            feature,formatter,texts,
-            allfeatures = {},controlsObj,currentOrder=[],fid=0;
+            feature,formatter,texts,labels,
+            allfeatures = {},controlsObj,currentOrder=[],fid=0,
+            active,
+            paramName='f';
 
             var tickWidth = 50;
 
@@ -67,13 +69,13 @@ function featureCharts() {
 
         function step(turn){
             div.selectAll("g.labels").classed({"active":false,"inactive":true});
-            d3.select(currentOrder[turn].parentNode).classed({"active":true,"inactive":false});
+            active = d3.select(currentOrder[turn].parentNode).classed({"active":true,"inactive":false}).datum().key;
             renderFunction();
         }
 
         function finish(){
             div.selectAll("g.labels").classed({"active":false,"inactive":true});
-            d3.select(currentOrder[0].parentNode).classed({"active":true,"inactive":false});
+            active = d3.select(currentOrder[0].parentNode).classed({"active":true,"inactive":false}).datum().key;
             renderFunction();
         }
 
@@ -99,9 +101,9 @@ function featureCharts() {
 
         var format = d3.format(".0f"),
             x = d3.scale.linear().range([0, tickWidth]),
-//            xaxis = d3.svg.axis().orient("top").ticks(1).tickFormat(format),
             yaxis = d3.svg.axis().orient("left"),
             id = featureCharts.id++,
+            names, //names mozno refactor
             maxvalue = function (data){return d3.max(data, function(d){return d.value;});};
 
                 draw.maxvalue = function(_) {
@@ -112,20 +114,9 @@ function featureCharts() {
         };
             
         function draw(){
-            data = datafunction(positions)
-                    .splice(0)
-                    //.sort(function(a,b){
-                    //    return +a.value<+b.value;
-                    //})
-                ;
+            var data = datafunction(positions)
+                    .splice(0);
 
-
-
-//            if(maxvalue){
-//                x.domain([0, maxvalue]);    
-//            }else{
-//                x.domain([0, d3.max(data, function(d){return d.value;})]);    
-//            }
             x.domain([0, maxvalue(data)]);
             
             var featureKeys = [];
@@ -138,8 +129,6 @@ function featureCharts() {
                         .domain(featureKeys);
             
             yaxis.scale(y);
-            
-//            xaxis.scale(x);
             
             var subg = g.select("g #g-"+id);
 
@@ -186,7 +175,7 @@ function featureCharts() {
             var labelsEnter = labels.enter()
                     .append("g")
                     .attr("class",function(d){
-                        return feature()===d.key?"active":"inactive";
+                        return chart.feature()===d.key?"active":"inactive";
                     })
                     .classed({"labels":true,"hand":true});
             
@@ -221,8 +210,9 @@ function featureCharts() {
                         return format(d.value);
                     })
                     .on("click",mouseclick);
-                    
-            var names = labels
+            
+            if(!names){
+             names = labels
                     .selectAll("text.names")
                     .datum(function(){
                         return d3.select(this.parentNode).datum();
@@ -230,14 +220,8 @@ function featureCharts() {
                     .text(function(d,i){
                         return d.key;
                     })
-                    .on("click",mouseclick);
-            
-//            var textValuesEnter = textValues.enter()
-//                        .append("text")
-//                        .attr("class","values");
-//                        
-            
-//            textValues
+                    .on("click",mouseclick);   
+            }
 
             subg.selectAll(".bar")
                         .datum(data)
@@ -261,7 +245,9 @@ function featureCharts() {
         
         function mouseclick(){
             div.selectAll("g.labels").classed({"active":false,"inactive":true});
-            d3.select(this.parentNode).classed({"active":true,"inactive":false});
+            active= d3.select(this.parentNode)
+                        .classed({"active":true,"inactive":false})
+                        .datum().key;
             renderFunction();
         }        
         return draw;
@@ -281,13 +267,6 @@ function featureCharts() {
       renderFunction = _; return chart;
     };
     
-    chart.feature = function(_) {
-        if (!arguments.length)
-            return feature;
-        feature = _;
-        return chart;
-    };
-    
     chart.formatter = function(_) {
       if (!arguments.length) return formatter;
       formatter = _; return chart;
@@ -297,7 +276,35 @@ function featureCharts() {
       if (!arguments.length) return texts;
       texts = _; return chart;
     };
+    
+    chart.labels = function(_) {
+      if (!arguments.length) return labels;
+      labels = _; return chart;
+    };
 
+    chart.feature = function() {
+        if(!active){
+            active=labels[0];
+        }
+        return active;
+    };
+
+    chart.pushParam = function(params) {
+        var position = labels.indexOf(chart.feature());
+        if(position){
+            params.f=position;
+        }
+        return params;
+    };
+    
+    chart.applyParam = function(params) {
+        if(params[paramName]){
+            active=labels[params[paramName]];
+        }else{
+            active=0;
+        }
+    };
+    
 
 
     return chart;

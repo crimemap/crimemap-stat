@@ -150,7 +150,12 @@ rect{
     height:14px;
 }
 .disabledInnerMain{
-    opacity:0.2;
+    opacity:0.0;
+    pointer-events:none;
+    /*background-color: #EEE;*/
+}
+
+.disabledEvents{
     pointer-events:none;
 }
 
@@ -178,4 +183,15 @@ rect{
 #stat-footer{
     margin:1em;
     clear:both;
+}
+
+#urlResolver{
+    clear:both;
+}
+
+#urlContent{
+    border: 0;
+    font-size: 11px;
+    outline: none;
+    width:60%;
 }
