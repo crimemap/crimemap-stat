@@ -15,13 +15,13 @@
 * You should have received a copy of the GNU Affero General Public License
 * along with Crimemap. If not, see <http://www.gnu.org/licenses/agpl-3.0.txt>.
 */
-function sunburst() {
+function sunburst(widthTotal,heightTotal) {
 
-    var margin = {top: 100, right: 300, bottom: 100, left: 300},
+    var margin = {top: heightTotal/2+20, right: widthTotal/2, bottom: heightTotal/2, left: widthTotal/2},
     radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 10;
     
     var radiusWidth = 25;
-    var legendSpacing = 20;
+    var legendSpacing = 22;
     var counter = {},texts;
     
     var dimension0,dimension1, 
@@ -89,8 +89,8 @@ function sunburst() {
     function chart() {
 
         if(!controlsObj0){
-            controlsObj0 = controls(d3node,labels0,step0,finish0);
-            controlsObj1 = controls(d3node,labels1,step1,finish1);
+            controlsObj0 = controls(d3node,labels0,step0,finish0,texts);
+            controlsObj1 = controls(d3node,labels1,step1,finish1,texts);
         }
         
         var helperText = [
@@ -165,7 +165,7 @@ function sunburst() {
                 });
 
         legendEnter.append("text")
-                .attr("x", 20)
+                .attr("x", 24)
                 .attr("y", 9)
                 .attr("dy", ".35em")
                 .style("text-anchor", "start")
@@ -223,6 +223,9 @@ function sunburst() {
             deactivateAll0();
             activateArr0(activeRecords0);
         }
+        if(activeRecords0.length===labels0.length){
+            deactivateAll0();
+        }
         
         if(!active0().empty())
             redrawLegend1(d3.select(active0().node()).datum());
@@ -231,6 +234,9 @@ function sunburst() {
         if(activeRecords1.length===1){
             deactivateAll1();
             activateArr1(activeRecords1);
+        }
+        if(activeRecords1.length===labels1.length){
+            deactivateAll1();
         }
         
         if(getActive1().empty()){
@@ -459,7 +465,7 @@ function sunburst() {
 
         legendEnter.append("text")
                 .attr("class","legend1Text")
-                .attr("x", 20)
+                .attr("x", 24)
                 .attr("y", 9)
                 .attr("dy", ".35em")
                 .style("text-anchor", "start");

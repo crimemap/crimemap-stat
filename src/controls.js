@@ -15,7 +15,7 @@
 * You should have received a copy of the GNU Affero General Public License
 * along with Crimemap. If not, see <http://www.gnu.org/licenses/agpl-3.0.txt>.
 */
-function controls(d3node,fields,step,finish){
+function controls(d3node,fields,step,finish,texts){
 
     var playActive=false;
     var intervalID;
@@ -25,7 +25,7 @@ function controls(d3node,fields,step,finish){
     function checkVariables(){
         if(!charts){
             charts = d3.selectAll(".chart").selectAll("svg");
-            allControls = d3.selectAll(".controls");
+            allControls = d3.selectAll(".controlsList");
         }
     }
 
@@ -73,7 +73,7 @@ function controls(d3node,fields,step,finish){
                 intervalID = setInterval(runPlay, timeout);
                 allControls.classed({"disabledInnerMain":true});
                 charts.classed({"disabledEvents":true});
-                controlsDiv.classed({"disabledInnerMain":false});
+                controlsList.classed({"disabledInnerMain":false});
                 playDiv.style("display","none");
                 pauseDiv.style("display","inline-block");
             }
@@ -85,76 +85,69 @@ function controls(d3node,fields,step,finish){
         pause();
         finishInternal();
     }
-
-    function help(){
-        checkVariables();
-        var duration = 1500;
-        if(helpWindow.classed("active")){
-            helpWindow
-            .transition()
-            .duration(duration)
-                .style({"width":0+"px","height":helpWindowHeight+"px"});
-
-            allControls.classed({"disabledInnerMain":true});
-            charts.classed({"disabledEvents":true});
-            helpWindow.classed({"active":false});
-
-            setTimeout(function(){
-
-                    allControls.classed({"disabledInnerMain":false});
-                    charts.classed({"disabledEvents":false});
-                },duration+20);
-
-        }else{
-            helpWindow
-            .transition()
-            .duration(duration)
-            .style({"width":helpWindowWidth+"px","height":helpWindowHeight+"px"})
-            .style({"display":"block"});
-
-            allControls.classed({"disabledInnerMain":true});
-
-            setTimeout(function(){
-                    helpWindow.classed({"active":true});
-                    allControls.classed({"disabledInnerMain":false});
-                    charts.classed({"disabledEvents":false});
-                },duration+20);
-
+    
+    function enable(){
+        if(!playActive){
+            controlsList.classed({"disabledInnerMain2":false});
+        }
+    }
+    
+    function disable(){
+        if(!playActive){
+            controlsList.classed({"disabledInnerMain2":true});
         }
     }
 
+    d3node.node().addEventListener("mouseenter",enable);
+    d3node.node().addEventListener("mouseleave",disable);
+    
     //TODO:map does not work if  d3node.select("svg")
     var svgNode = d3node.selectAll("svg");
+
     var helpWindowHeight = svgNode.attr("height");
     var helpWindowWidth = svgNode.attr("width");
 
-    var helpWindow = d3node.insert("div",":first-child")
-        .classed({"helpWindow":true})
-        .style({"width":0+"px","height":helpWindowHeight+"px","display":"none"});
+    var modalId = "modal-"+d3node.attr("id");
+    
+    var helpWindow = d3node.select("#"+modalId);
+    helpWindow.append("div").classed({"close-reveal-modal":true}).html("&#215;");
 
     var controlsDiv = d3node.insert("div",":first-child")
-        .classed({"controls":true});
+        .classed({"controls":true})
+        .style({"width":helpWindowWidth+"px"});
 
-    var playDiv = controlsDiv.append("span")
-        .classed({"icon-play":true,"icon":true})
-        .on("click",play);
+    var controlsTitle = controlsDiv.append("h5").classed({"subheader":true}).text(texts.chartTitles[d3node.attr("id")]);
+    
+    var line = controlsDiv.append("hr").classed({"nospace":true});
+    
+    var controlsList = controlsDiv.append("div").classed({"button-bar":true,"right":true})
+            .append("ul").classed({"button-group":true,"disabledInnerMain2":true,"controlsList":true});
 
-    var pauseDiv = controlsDiv.append("span")
-        .classed({"icon-pause":true,"icon":true})
+    var playDiv = controlsList.append("li")
+        .classed({"tiny":true,"button":true,"secondary":true})
+        .on("click",play)
+        .html("&nbsp;&nbsp;play");
+//    playDiv.append("span").classed({"fi-play":true,"size-21":true});
+        
+
+    var pauseDiv = controlsList.append("li")
+        .classed({"tiny":true,"button":true,"secondary":true})
         .style("display","none")
-        .on("click",pause);
+        .on("click",pause)
+        .text("pause");
+//        pauseDiv.append("span").classed({"fi-pause":true,"size-21":true});
 
 
-    var helpDiv = controlsDiv.append("span")
-        .classed({"icon-help":true,"icon":true})
-        .text("?")
-        .on("click",help);
+    var helpDiv = controlsList.append("li")
+        .classed({"tiny":true,"button":true,"secondary":true})
+        .attr("data-reveal-id",modalId).text("help");
+//        .append("a").attr("href","#").attr("data-reveal-id",modalId).text("help");
 
-    var cancelDiv = controlsDiv.append("span")
-        .classed({"icon-cancel":true,"icon":true})
-        .text("X")
-        .on("click",cancel);
-
+    var cancelDiv = controlsList.append("li")
+        .classed({"tiny":true,"button":true,"secondary":true})
+        .on("click",cancel)
+        .text("cancel");
+//    cancelDiv.append("span").classed({"fi-x":true,"size-21":true});
 
     return {
         isPlaying: function(){

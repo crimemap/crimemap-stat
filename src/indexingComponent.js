@@ -23,13 +23,13 @@ function indexingComponent(renderFunction){
     
     var absolute = div.append("label")
             .attr("id","absolute")
-            .classed({active:true,hand:true})
+            .classed({active:true,hand:true,button:true,tiny:true})
             .text("Absolútna hodnota")
             .on("click",onClick);
     
     var index = div.append("label")
             .attr("id","index")
-            .classed({inactive:true,hand:true})
+            .classed({secondary:true,hand:true,button:true,tiny:true})
             .text("Hodnota na 1000 obyvateľov za rok")
             .on("click",onClick);
     
@@ -38,8 +38,8 @@ function indexingComponent(renderFunction){
     }
     
     function onClick(){
-        div.selectAll("label").classed({"active":false,"inactive":true});
-        d3.select(this).classed({"active":true,"inactive":false});
+        div.selectAll("label").classed({"active":false,"secondary":true});
+        d3.select(this).classed({"active":true,"secondary":false});
         renderFunction();
     }
     
@@ -53,11 +53,11 @@ function indexingComponent(renderFunction){
     
     chart.applyParam = function(params) {
         if(!params[paramName]){
-            index.classed({"active":false,"inactive":true});
-            absolute.classed({"active":true,"inactive":false});    
+            index.classed({"active":false,"secondary":true});
+            absolute.classed({"active":true,"secondary":false});    
         }else if(+params[paramName] === 1){
-            absolute.classed({"active":false,"inactive":true});
-            index.classed({"active":true,"inactive":false});
+            absolute.classed({"active":false,"secondary":true});
+            index.classed({"active":true,"secondary":false});
         }
     };
     

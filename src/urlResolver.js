@@ -17,15 +17,14 @@
 */
 function urlResolver() {
     
-    var components = [],dimension,params = {};
+    var components = [],params = {};
     
-    var div = d3.select("#urlResolver");
+    var div = d3.select("#urlResolver")
+            
+    var urlResolverClickable = d3.select(document.getElementById("urlResolverClickable"))
+            .on("click",onUrlClick);
     
-    var urlDiv = div.append("div").on("click",onUrlClick).classed({"hand":true});
-    var urlLabel = urlDiv.append("a").text("Zdieľať aktuálne zobrazenie: ");
-    var urlContent = urlDiv.append("input").attr("type","text").attr("id","urlContent").classed({"hand":true});
-    
-    var dataLink = div.append("a").text("Stiahnuť záznamy aktuálneho zobrazenia").classed({"hand":true});
+    var urlContent = d3.select(document.getElementById("urlContent"));
     
     var paramKeys = ["m","g","t","y","i","f"];
     
@@ -91,19 +90,16 @@ function urlResolver() {
             params= d.pushParam(params);
         });
         
-        dataLink.on("click",function(){
-            var popup = window.open('','Data','data:application/json;charset=utf-8');
-            popup.document.write('<meta name="content-type" content="application/json">');
-            popup.document.write('<meta name="content-disposition" content="attachment;  filename=data.json">');
-            popup.document.write(JSON.stringify(dimension.top(Infinity)));
-        });
-        
-        
         urlContent.attr("value",location.host+location.pathname+"?"+encodeParams(params));
     }
     
     chart.decodeUrl = function(_) {
-        var params = decodeParams(location.search.substr(1));
+        var params = {};
+        if (!arguments.length){
+            params = decodeParams(location.search.substr(1));
+        }else{
+            params = decodeParams(_);
+        }
         components.forEach(function(d){
             d.applyParam(params);
         });
@@ -113,13 +109,6 @@ function urlResolver() {
         if (!arguments.length)
             return components;
         components = _;
-        return chart;
-    };
-    
-    chart.dimension = function(_) {
-        if (!arguments.length)
-            return dimension;
-        dimension = _;
         return chart;
     };
     

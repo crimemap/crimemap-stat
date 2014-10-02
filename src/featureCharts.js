@@ -15,12 +15,12 @@
 * You should have received a copy of the GNU Affero General Public License
 * along with Crimemap. If not, see <http://www.gnu.org/licenses/agpl-3.0.txt>.
 */
-function featureCharts() {
+function featureCharts(widthTotal,heightTotal) {
     if (!featureCharts.id) featureCharts.id = 0;
 
-    var margin = {top: 10, right: 10, bottom: 20, left: 170},
-            width = 600 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom,
+    var margin = {top: 10, right: 10, bottom: 20, left: 0},
+            width = widthTotal - margin.left - margin.right,
+            height = heightTotal - margin.top - margin.bottom,
             ticksize = 20,
             tickspacing = 3,
             group,
@@ -42,8 +42,8 @@ function featureCharts() {
         if (g.empty()) {
 
             g = div.append("svg")
-                    .attr("width", width + margin.left + margin.right)
-                    .attr("height", height + margin.top + margin.bottom)
+                    .attr("width", widthTotal)
+                    .attr("height", heightTotal)
                     .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -80,7 +80,7 @@ function featureCharts() {
         }
 
         if(!controlsObj){
-            controlsObj = controls(div,currentOrder,step,finish);
+            controlsObj = controls(div,currentOrder,step,finish,texts);
         }
         var helperText = [
                           "Aktuálny výber: "+texts.featureText+". ",
@@ -138,33 +138,12 @@ function featureCharts() {
                         .attr("id","g-"+id)
                         .attr("transform", "translate("+((width+margin.left+20)/columnCount*columnPos)+"," + ((ticksize+tickspacing)*topmargin+10)+ ")");
 
-//                subg.append("clipPath")
-//                        .attr("id", "clip-"+id)
-//                        .append("rect")
-//                        .attr("x", 0)
-//                        .attr("y", 0)
-//                        .attr("width", width)
-//                        .attr("height", ticksize*featureKeys.length);
-
                 subg.selectAll(".bar")
-//                        .data(["background", "foreground"])
-                        .data(["foreground"])
+                        .data(["background", "foreground"])
                         .enter().append("path")
                         .attr("class", function(d) {
                             return d + " bar";
                         });
-
-//                subg.selectAll(".foreground.bar")
-//                        .attr("clip-path", "url(#clip-" + id + ")");
-
-//                subg.append("g")
-//                        .attr("class", "axis x");
-//                
-//                subg.append("g")
-//                        .attr("class", "axis y");
-                
-                
-                
             }
             
             var labels = subg.selectAll("g.labels")
@@ -181,14 +160,15 @@ function featureCharts() {
             
             labelsEnter.append("text")
                     .attr("x",function(d){
-                        return tickWidth+5;
+                        return width/2-30;
                     })
+                    .attr("text-anchor","end")
                     .classed({"values":true});
             
-            var sth = labelsEnter.append("text")
+            labelsEnter.append("text")
                     .classed({"names":true})
-                    .attr("x",-5)
-                    .attr("text-anchor","end")
+                    .attr("x",tickWidth+15)
+                    .attr("text-anchor","start")
                     .attr("id",function(d){
                         var ret = fid;
                         fid=fid+1;
@@ -200,8 +180,7 @@ function featureCharts() {
                             return "translate(0,"+((i+0.5) * (ticksize+tickspacing/4))+")";
                     });
             
-            var textValues = labels
-                    .selectAll("text.values")
+            labels.selectAll("text.values")
                     .datum(function(){
                         return d3.select(this.parentNode).datum();
                     })
@@ -221,14 +200,18 @@ function featureCharts() {
                         return d.key;
                     })
                     .on("click",mouseclick);   
+            
+            subg.select(".background")
+                        .datum(data)
+                        .attr("d", barPath2);
             }
 
-            subg.selectAll(".bar")
+            subg.select(".foreground")
                         .datum(data)
                         .transition()
                         .attr("d", barPath);
 
-            data.map(function(d,i){
+            data.map(function(d){
                 currentOrder.push(allfeatures[d.key]);
              });
             
@@ -239,6 +222,15 @@ function featureCharts() {
             while (++i < n) {
                 d = groups[i];
                 path.push("M", 0, ",", (i * ticksize)+tickspacing/2, "h", x(d.value), "v"+(ticksize-tickspacing)+"H", 0, "Z");
+            }
+            return path.join("");
+        }
+        
+        function barPath2(groups) {
+            var path = [], i = -1, n = groups.length, d;
+            while (++i < n) {
+                d = groups[i];
+                path.push("M", 0, ",", (i * ticksize)+tickspacing/2, "h", tickWidth, "v"+(ticksize-tickspacing)+"H", 0, "Z");
             }
             return path.join("");
         }
@@ -299,13 +291,17 @@ function featureCharts() {
     
     chart.applyParam = function(params) {
         if(params[paramName]){
+            div.selectAll("g.labels").classed({"active":false,"inactive":true});
             active=labels[params[paramName]];
+            
+            if(Object.getOwnPropertyNames(allfeatures).length > 0){
+                d3.select(allfeatures[labels[params[paramName]]].parentNode).classed({"active":true,"inactive":false});
+            }
+            
         }else{
             active=0;
         }
     };
-    
-
 
     return chart;
 }

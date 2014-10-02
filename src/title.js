@@ -15,7 +15,7 @@
 * You should have received a copy of the GNU Affero General Public License
 * along with Crimemap. If not, see <http://www.gnu.org/licenses/agpl-3.0.txt>.
 */
-function title() {
+function title(chartTitles) {
     
     var group,featureTitle,regionsNames,feature,formatter,indexing;
     
@@ -27,6 +27,8 @@ function title() {
     };
 
     var texts = {
+        chartTitles:chartTitles,
+        
         regsText:"",
         regsTextInflected:"",
 
@@ -34,6 +36,7 @@ function title() {
         yearsTextInflected:"",
 
         typeGroupsText:"",
+        typeGroupsTextInflected:"",
         typesText:"",
         tp:"",
 
@@ -43,6 +46,9 @@ function title() {
         finalTitle: function(){
             return  [this.featureText + " : "+this.valueText,
                      this.tp + " " + this.regsTextInflected  + " " + this.yearsTextInflected + " "];
+        },
+        subTitle:function(){
+            return this.tp + " " + this.regsTextInflected  + " " + this.yearsTextInflected + " ";
         }
     };
     
@@ -54,17 +60,23 @@ function title() {
     
     var divs = {};
     
-    var divContainer = div.append("div")
-                        .attr("class","container");
+    var divContainer = div.append("div");
+//                        .attr("class","inline-list");
     
-    divs.feature = divContainer.append("div")
-                    .attr("class","feature");
+    divs.feature = divContainer.append("span").classed({"titleHeader":true});
+    divContainer.append("span").text(" : ").classed({"titleHeader":true});
+//            .append("h3").classed({"title":true});
     
-    divs.value = divContainer.append("div")
-                    .attr("class","value");
+    divs.value = divContainer.append("span").classed({"titleHeader":true});
+//            .append("h3").classed({"title":true});
     
+    var divContainer2= div.append("div")
+            //.append("ul").attr("class","inline-list");
+
+    var subTitleDiv = divContainer2.append("div").classed({"subTitleHeader":true,"subheader":true});
+                
     for(var i=0;i<arr.length;i++){
-        divs[arr[i]]=div.append("div").attr("class","subtitle");
+        divs[arr[i]]=divContainer2.append("span")//.append("li").append("h4").attr("class","subheader");
     }
     
     function chart(){
@@ -104,7 +116,7 @@ function title() {
                     }else{
                         texts.regsTextInflected = texts.regsTextInflected + regionsNames[d].substring(0, regionsNames[d].length -6)+"om kraji";
                     }
-                    return texts.regsText;
+                    //return texts.regsText;
                 });
                 
         selection.years.text(function(d){
@@ -115,12 +127,12 @@ function title() {
                         texts.yearsText = "rok " + d;
                         texts.yearsTextInflected = "v roku " + d;
                     }
-                    return texts.yearsText;
+                    //return texts.yearsText;
                 });
                 
         selection.types.text(function(d){
                     texts.typesText = summed.types?d:labels.types[d];
-                    return texts.typesText;
+                    //return texts.typesText;
                 });
                 
         selection.typeGroups.text(function(d){
@@ -128,16 +140,20 @@ function title() {
                 texts.typeGroupsText = "";
             }else{
                 texts.typeGroupsText = labels.typeGroups[d];
+                texts.typeGroupsTextInflected = texts.typeGroupsText + " kriminalita";
             }
-            return texts.typeGroupsText;
+            return //texts.typeGroupsText;
         });
 
-        texts.tp = texts.typeGroupsText?texts.typeGroupsText:texts.typesText;
+        texts.tp = texts.typeGroupsText?texts.typeGroupsTextInflected:texts.typesText;
         
         
         
         texts.valueText = formatter(feature())(group.getFeatureByIndexing(feature()));
         divs.value.text(texts.valueText);
+        
+        subTitleDiv.text(texts.subTitle());
+        
         
 //        regs.text(d3.keys(group.regs));
 //        types.text(d3.keys(group.types));

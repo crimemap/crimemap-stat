@@ -17,36 +17,62 @@
 */
 #stat-wrapper{
     font-family: "Helvetica Neue", Helvetica, Arial;
-    font-size: 11px;
-    margin:1em;
+    font-size: 12px;
+}
+
+.stat-column{
+    float:left;
+    margin:10px;
     padding:0;
 }
 
-#stat-wrapper a, #stat-wrapper a:active, #stat-wrapper a:visited, #stat-wrapper a:link {
-    color:black;
+.stat-component{
+    width:630px;
+    margin:0;
+    padding:0;
 }
 
+#stat-footer{
+    height: 100px;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    line-height: 50px;
+    background-color: #aaa;
+    text-align: center;
+    width: 100%;
+}
+
+
+.titleHeader{
+    font-size: 1.6875rem;
+}
+.subTitleHeader{
+    font-size: 1.4375rem;
+}
+
+.hand:hover{cursor: pointer; cursor: hand; }
+
+/*** SVG **/
 .axis text{
     font-family: sans-serif; 
 }
-.hand:hover{cursor: pointer; cursor: hand; }
-text.focused, g.focused text{text-decoration: underline;}
-.chart { display: block; border-bottom: solid #000 0px; vertical-align: top; text-align: left;}
+
+
+/*text.focused, g.focused text{text-decoration: underline;}*/
+.chart { 
+    /*display: block; vertical-align: top; text-align: left;*/
+/*    margin:0 auto;
+    width:600px;*/
+}
+
 .country, .region, .district {fill: none; stroke: #444; stroke-width: 1;  stroke-linejoin: round;}
 
-.column{
-    float:left;
-    width:600px;
-}
+
 g.inactive text,text.inactive{
     fill:#aaa;
 }
-label.inactive{
-    color:#aaa;
-}
-#indexing label{
-    margin: 0.5em 1.5em;
-}
+
 path.active{
   fill: url(#hash);
 }
@@ -61,10 +87,14 @@ rect{
     stroke: #aaa;
 }
 #indexing{
-    text-align: center;
-    width: 600px;
+    width: 630px;
 }
+/*#indexing label{
+    margin: 0;
+}*/
 
+
+/*
 #title {
     text-align: center;
     width: 600px;
@@ -83,9 +113,13 @@ rect{
 }
 #title .subtitle{
     margin: 0em 1em 1em 1em;
+}*/
+
+#title{
+    margin-top:10px;
 }
 
-.district {stroke-width: 1; stroke-dasharray: 1,1;}
+/*.district {stroke-width: 1; stroke-dasharray: 1,1;}*/
 .progress-meter .background { fill: #ccc;}
 .progress-meter .foreground { fill: #000;}
 
@@ -117,7 +151,7 @@ rect{
     width: 60px;
 }*/
 
-.icon-play{
+/*.icon-play{
 	border-top: 7px solid transparent;
 	border-bottom: 7px solid transparent;
 	border-left: 7px solid black;
@@ -148,9 +182,15 @@ rect{
     display:inline-block;
     width:14px;
     height:14px;
-}
+}*/
 .disabledInnerMain{
-    opacity:0.0;
+    opacity:0.2;
+    pointer-events:none;
+    /*background-color: #EEE;*/
+}
+
+.disabledInnerMain2{
+    opacity:0.2;
     pointer-events:none;
     /*background-color: #EEE;*/
 }
@@ -158,11 +198,11 @@ rect{
 .disabledEvents{
     pointer-events:none;
 }
-
+/*
 .icon{
     font-size: 14px;
     font-family: sans-serif;
-}
+}*/
 
 .helpWindow{
     background-color:white;
@@ -179,19 +219,28 @@ rect{
 .helpWindow p{
     margin:1em 1em 0em 1em;
 }
-
-#stat-footer{
-    margin:1em;
-    clear:both;
-}
-
+/*
 #urlResolver{
     clear:both;
-}
+}*/
 
 #urlContent{
-    border: 0;
-    font-size: 11px;
+    background-color: #CCC;
+    border:none;
+    box-shadow:none;
     outline: none;
-    width:60%;
+    font-size: inherit;
+    height: inherit;
+    margin: 0;
+    padding: 0;
+    width:100%;
+}
+
+#urlContent:focus{
+    outline: none;
+}
+
+.nospace{
+    padding:0;
+    margin:0;
 }

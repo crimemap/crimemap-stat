@@ -7,11 +7,22 @@
 <html lang="sk"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title> </title>
+<link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation/css/normalize.css">
+<link rel="stylesheet" type="text/css" href="../../crimemap-base/css/app.css">
+<link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation-icon-fonts/foundation-icons.css" />
 <link rel="stylesheet" type="text/css" href="crimemap-stat.css">
+
+<script src="../../crimemap-base/bower_components/foundation/js/vendor/modernizr.js"></script>
+<script src="../../crimemap-base/bower_components/foundation/js/vendor/jquery.js"></script>
+<script src="../../crimemap-base/bower_components/foundation/js/vendor/fastclick.js"></script>
+<script src="../../crimemap-base/bower_components/foundation/js/foundation.min.js"></script>
+
+
 <script src="../node_modules/d3/d3.js"></script>
 <script src="../node_modules/crossfilter/crossfilter.js"></script>
 <script src="../node_modules/topojson/topojson.js"></script>
 <script src="urlResolver.js"></script>
+<script src="dataDownloader.js"></script>
 <script src="controls.js"></script>
 <script src="fileProgress.js"></script>
 <script src="indexingComponent.js"></script>
@@ -25,43 +36,162 @@
 </head>
 <body>
 <!-- /build -->
+
+
+    <nav class="top-bar" data-topbar role="navigation">
+      <ul class="title-area">
+        <li class="name">
+          <h1>
+              <a href="#">Mapa zločinu</a>
+          </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+        <section class="top-bar-section">
+            <ul class="left">
+                <li>
+                    <a href="#">Štatistika</a>
+                </li>
+                <li>
+                    <a href="#">Crowd mapa</a>
+                </li>
+                <li>
+                    <a href="#">O projekte</a>
+                </li>
+                <li class="has-dropdown">
+                     <a href="#">Pomocník</a>
+                     <ul class="dropdown">
+                         <li><a href="#">Aplikácia</a></li>
+                         <li><a href="#">Kraje</a></li>
+                         <li><a href="#">Typy kriminality</a></li>
+                         <li><a href="#">Roky</a></li>
+                         <li><a href="#">Veličiny</a></li>
+                         <li><a href="#">Dáta</a></li>
+                     </ul>
+                 </li>
+            </ul>
+             <ul class="right">
+              <li><a href="#">DEMO</a></li>
+          </ul>
+        </section>
+    </nav>
+
+
+
+
+
+
     <div id="stat-wrapper">
         <div id="file_result"></div>
         <div id="progress-info"></div>
-        <div id="title"></div>
-        <div id="charts-left" class="column">
-            <div id="map-chart" class="chart"></div>
-            <div id="sunburst" class="chart"></div>
+        <div class="row">
+            <div id="title" class="column small-12 large-12"></div>
         </div>
-        <div id="charts-right" class="column">
-            <div id="barsy" class="chart"></div>
-            <div id="featureCharts" class="chart">
+        <div class="row">
+            <div id="map-chart" class="column small-12 xlarge-6 chart">
+                <div id="modal-map-chart" class="reveal-modal" data-reveal></div>
+            </div>
+            <div id="barsy" class="column small-12 xlarge-6 chart">
+                <div id="modal-barsy" class="reveal-modal" data-reveal></div>
+            </div>
+        </div>
+        <div id="charts-right" class="row">
+            <div id="sunburst" class="column small-12 xlarge-6 chart">
+                <div id="modal-sunburst" class="reveal-modal" data-reveal></div>
+            </div>
+            <div id="featureCharts" class="column small-12 xlarge-6 chart">
+                <div id="modal-featureCharts" class="reveal-modal" data-reveal></div>
                 <div id="indexing"></div>
-
-            </div>
-        </div>
-        <div id="urlResolver"></div>
-        <div id="stat-footer">
-            <div class="column">
-                <!-- <a href="javascript:void(0)" onclick="filter([1,2,3,null])">test</a>-->
-                Copyright © 2014 Andrej Aláč, Miroslav Bimbo
-                &nbsp;&nbsp;&nbsp;<a href="https://github.com/crimemap/crimemap-stat">Zdrojový kód</a>
-                &nbsp;&nbsp;&nbsp;<a id="download-link">Export dát CSV</a>
-            </div>
-            <script>
-                d3.select("#download-link")
-                   .attr("href",function(){
-                    return (typeof DJANGO_STATIC_URL === "undefined"?"":DJANGO_STATIC_URL)+'podla_druhucsv_3dimTypeHierarchy.csv';
-                   });
-            </script>
-            <div class="column">
-                Použité zdroje dát:
-                &nbsp;&nbsp;&nbsp;<a href="http://www.minv.sk/?statistika-kriminality-v-slovenskej-republike-xml">Štatistika kriminality</a>
-                &nbsp;&nbsp;&nbsp;<a href="http://px-web.statistics.sk/PXWebSlovak/">Počty obyvateľov</a>
-                &nbsp;&nbsp;&nbsp;<a href="http://wiki.freemap.sk/HraniceAdministrativnychUzemi">Hranice krajov</a>
             </div>
         </div>
     </div>
+    
+        
+    <div class="topFooter">
+        <div class="row">
+
+            <div class="column xlarge-2 small-4">    
+                <div id="urlResolverClickable" class="footer-block urlBlock">
+                        <div id="urlResolver">
+                            <h5 class="hand">Zdieľať</h5>
+                            <input id="urlContent" class="hand" type="text" value="">
+                        </div>
+                </div>
+            </div>
+
+            <div class="column xlarge-2 small-4">
+                <div class="footer-block lightbulbBlock">
+                    <h5>Vedeli ste?</h5>
+                    <a href="#" data-reveal-id="myModal">Zaujímavé fakty</a>
+                    <div id="myModal" class="reveal-modal" data-reveal>
+                        <h2>Vedeli ste?</h2>
+                        <p class="lead">V nasledujúcom zozname si môžete pozrieť niekoľko zaujímavých faktov</p> 
+                        <div class="row">
+                            <div class="column small-2">
+                                <a href="#" onclick="window.interest('10r4wt34!-u9y80x')">Mladistvý páchateľ</a>
+                            </div>
+                            <div class="column small-10">
+                                Počet mladistvych klesa!
+                            </div>
+                        </div>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="column xlarge-2 small-4">
+                <div class="footer-block downloaderBlock">
+                    <h5>Stiahnuť data</h5>
+                    <div id="dataDownloader">
+                        <a href="#">Aktuálny výber (json)</a>
+                    </div>
+                    <a id="download-link">Zdrojové data (csv)</a>
+                    <script>
+                    d3.select("#download-link")
+                       .attr("href",function(){
+                        return (typeof DJANGO_STATIC_URL === "undefined"?"":DJANGO_STATIC_URL)+'podla_druhucsv_3dimTypeHierarchy.csv';
+                       });
+                    </script>        
+                </div>
+
+            </div>
+
+            <div class="column xlarge-2 small-4">
+                <div class="footer-block sourcesBlock">
+                    <h5>Použité zdroje dát</h5>
+                    <a href="http://www.minv.sk/?statistika-kriminality-v-slovenskej-republike-xml">Štatistika kriminality</a><br>
+                    <a href="http://px-web.statistics.sk/PXWebSlovak/">Počty obyvateľov</a><br>
+                    <a href="http://wiki.freemap.sk/HraniceAdministrativnychUzemi">Hranice krajov</a><br>
+                </div>
+            </div>
+
+            <div class="column xlarge-2 small-4">
+                <div class="footer-block githubBlock">
+                    <h5>Zdrojový kód</h5>
+                    <a href="https://github.com/crimemap">github.com/crimemap</a>
+                </div>
+            </div>
+            <div class="column xlarge-2 small-4">
+                <div class="footer-block mailBlock">
+                    <h5>Kontakt</h5>
+                    <a href="mailto:opendata@opendata.sk">opendata@opendata.sk</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <div class="row">
+            <div class="column small-centered text-center">
+                Copyright © 2014 &nbsp;&nbsp;&nbsp;&nbsp;<a href="opendata.sk">Opendata.sk</a>
+            </div>
+        </div>
+    </div>
+
+<script>
+  $(document).foundation();
+</script>
 <!-- build:include:deploy template_footer.html -->
 </body>
 </html>

@@ -15,13 +15,13 @@
 * You should have received a copy of the GNU Affero General Public License
 * along with Crimemap. If not, see <http://www.gnu.org/licenses/agpl-3.0.txt>.
 */
-function barsy() {
+function barsy(widthTotal,heightTotal) {
     
     var group, dimension, labels,feature, renderFunction, formatter,all, controlsObj, sortedLabels, texts;
     
-    var margin = {top: 10, right: 10, bottom: 20, left: 60},
-    width = 600 - margin.left - margin.right,
-    height = 100 - margin.top - margin.bottom,
+    var margin = {top: 40, right: 10, bottom: 80, left: 70},
+    width = widthTotal - margin.left - margin.right,
+    height = heightTotal - margin.top - margin.bottom,
     ticksize = 20,
     activeRecords,
     paramName='y';
@@ -47,8 +47,8 @@ function barsy() {
             .ticks(2);
 
     var svg = d3node.append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom);
+                .attr("width", widthTotal)
+                .attr("height", heightTotal);
     
     var g = svg.select("g");
     
@@ -74,7 +74,7 @@ function barsy() {
                 .tickFormat(formatter(feature()));
 
         if(!controlsObj){
-            controlsObj = controls(d3node,labels,step,finish);
+            controlsObj = controls(d3node,labels,step,finish,texts);
         }
         var helperText = [
                           "Aktuálny výber: "+texts.yearsText+". ",
@@ -123,7 +123,14 @@ function barsy() {
           g.select(".foreground.bar")
                         .attr("clip-path", "url(#clip)");
           
-            svg.select(".x.axis").call(xAxis);
+            svg.select(".x.axis").call(xAxis)
+                    .selectAll("text")  
+//                    .style("text-anchor", "end")
+//                    .attr("dx", "-.8em")
+//                    .attr("dy", ".15em")
+//                    .attr("transform", function(d) {
+//                        return "rotate(-65)" 
+//                        });
             
             g.selectAll(".tick text")
                         .on("click",mouseclick)
@@ -132,7 +139,6 @@ function barsy() {
 
         }
         
-        svg.select(".x.axis").call(xAxis);
         svg.select(".y.axis").call(yAxis);
         
         g.selectAll(".bar")
@@ -172,7 +178,9 @@ function barsy() {
 
       function activate(d){
           g.select("text#l"+d).classed({"inactive":false,"active":true});
-          g.select("#clip rect").transition().attr("x", 5+x(d))
+          g.select("#clip rect")
+//                  .transition()
+                  .attr("x", 5+x(d))
                         .attr("width", ticksize);
       }
       
