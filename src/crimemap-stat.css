@@ -20,30 +20,6 @@
     font-size: 12px;
 }
 
-.stat-column{
-    float:left;
-    margin:10px;
-    padding:0;
-}
-
-.stat-component{
-    width:630px;
-    margin:0;
-    padding:0;
-}
-
-#stat-footer{
-    height: 100px;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    line-height: 50px;
-    background-color: #aaa;
-    text-align: center;
-    width: 100%;
-}
-
-
 .titleHeader{
     font-size: 1.6875rem;
 }
@@ -53,176 +29,14 @@
 
 .hand:hover{cursor: pointer; cursor: hand; }
 
-/*** SVG **/
-.axis text{
-    font-family: sans-serif; 
+#indexing button.active, #indexing .button.active {
+    background-color: steelblue;
 }
-
-
-/*text.focused, g.focused text{text-decoration: underline;}*/
-.chart { 
-    /*display: block; vertical-align: top; text-align: left;*/
-/*    margin:0 auto;
-    width:600px;*/
-}
-
-.country, .region, .district {fill: none; stroke: #444; stroke-width: 1;  stroke-linejoin: round;}
-
-
-g.inactive text,text.inactive{
-    fill:#aaa;
-}
-
-path.active{
-  fill: url(#hash);
-}
-#sunburst path.active{
-    stroke: black;
-    stroke-width: 2;
-}
-#sunburst path.active[depth="d1"]{
-    stroke-width: 0;
-}
-rect{
-    stroke: #aaa;
-}
-#indexing{
-    width: 630px;
-}
-/*#indexing label{
-    margin: 0;
-}*/
-
-
-/*
-#title {
-    text-align: center;
-    width: 600px;
-}
-#title div{
-    display: inline-block;
-    margin:0.2em 0.5em;
-}
-#title .feature, #title .value{
-    font-size: 15px;
-    margin: 0em 1em 0em 1em;
-}
-#title .container{
-    display: block;
-    margin: 0.5em 1em 0em 1em;
-}
-#title .subtitle{
-    margin: 0em 1em 1em 1em;
-}*/
 
 #title{
     margin-top:10px;
 }
 
-/*.district {stroke-width: 1; stroke-dasharray: 1,1;}*/
-.progress-meter .background { fill: #ccc;}
-.progress-meter .foreground { fill: #000;}
-
-#progress-info, .progress-info { display: inline-block; vertical-align: top;}
-
-.axis path, .axis line {
-    fill: none;
-    shape-rendering: crispedges;
-    stroke: #000000;
-}
-
-.background.bar {
-  fill: #ccc;
-}
-
-.foreground.bar {
-  fill: steelblue;
-}
-
-/* debug listrecords
-.props{
-    border: 1px solid #000000;
-    display: inline-block;
-    margin: 0;
-    max-height: 1.1em;
-    max-width: 100px;
-    overflow: hidden;
-    padding: 0;
-    width: 60px;
-}*/
-
-/*.icon-play{
-	border-top: 7px solid transparent;
-	border-bottom: 7px solid transparent;
-	border-left: 7px solid black;
-    cursor: pointer;
-    display:inline-block;
-}
-
-.icon-pause{
-    cursor: pointer;
-    display:inline-block;
-    border-radius: 50%;
-    background-color:black;
-    width:7px;
-    height:7px;
-    margin:3.5px 0;
-}
-
-.icon-help{
-    cursor: pointer;
-    display:inline-block;
-    width:14px;
-    height:14px;
-    margin-left: 9px;
-}
-
-.icon-cancel{
-    cursor: pointer;
-    display:inline-block;
-    width:14px;
-    height:14px;
-}*/
-.disabledInnerMain{
-    opacity:0.2;
-    pointer-events:none;
-    /*background-color: #EEE;*/
-}
-
-.disabledInnerMain2{
-    opacity:0.2;
-    pointer-events:none;
-    /*background-color: #EEE;*/
-}
-
-.disabledEvents{
-    pointer-events:none;
-}
-/*
-.icon{
-    font-size: 14px;
-    font-family: sans-serif;
-}*/
-
-.helpWindow{
-    background-color:white;
-    position:absolute;
-    z-index:1000;
-    overflow: hidden;
-    font-size:11px;
-}
-
-.helpWindow.active{
-    overflow: auto;
-}
-
-.helpWindow p{
-    margin:1em 1em 0em 1em;
-}
-/*
-#urlResolver{
-    clear:both;
-}*/
 
 #urlContent{
     background-color: #CCC;
@@ -243,4 +57,67 @@ rect{
 .nospace{
     padding:0;
     margin:0;
+}
+
+/** SVG ****/
+
+rect{
+    stroke: #aaa;
+}
+
+.axis text{
+    font-family: sans-serif; 
+}
+
+.axis path, .axis line {
+    fill: none;
+    shape-rendering: crispedges;
+    stroke: #000000;
+}
+
+
+g.inactive text,text.inactive{
+    fill:#aaa;
+}
+
+path.active{
+  fill: url(#hash);
+}
+
+.country, .region, .district {fill: none; stroke: #444; stroke-width: 1;  stroke-linejoin: round;}
+
+#sunburst path.active{
+    stroke: black;
+    stroke-width: 2;
+}
+#sunburst path.active[depth="d1"]{
+    stroke-width: 0;
+}
+
+
+.progress-meter .background { fill: #ccc;}
+.progress-meter .foreground { fill: #000;}
+
+#progress-info, .progress-info { display: inline-block; vertical-align: top;}
+
+.background.bar {
+  fill: #ccc;
+}
+
+.foreground.bar {
+  fill: steelblue;
+}
+
+.disabledInnerMain{
+    opacity:0.2;
+    pointer-events:none;
+}
+
+.disabledInnerMain2{
+    opacity:0.2;
+    pointer-events:none;
+}
+
+.disabledEvents{
+    pointer-events:none;
 }

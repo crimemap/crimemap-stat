@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="sk"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title> </title>
+        <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation/css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="../../crimemap-base/css/app.css">
+        <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation-icon-fonts/foundation-icons.css" />
+        <link rel="stylesheet" type="text/css" href="crimemap-stat.css">
+
+        <script src="../../crimemap-base/bower_components/foundation/js/vendor/modernizr.js"></script>
+        <script src="../../crimemap-base/bower_components/foundation/js/vendor/jquery.js"></script>
+        <script src="../../crimemap-base/bower_components/foundation/js/vendor/fastclick.js"></script>
+        <script src="../../crimemap-base/bower_components/foundation/js/foundation.min.js"></script>
+
+        <script src="init.js"></script>
+    </head>
+    <body onload="init()">
+        <!-- /build -->
+
+        <nav class="top-bar" data-topbar role="navigation">
+            <ul class="title-area">
+                <li class="name">
+                    <h1>
+                        <a href="#">Mapa zločinu</a>
+                    </h1>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+            <section class="top-bar-section">
+                <ul class="left" id="menu-crimemap-list">
+                    <li id="menu-crimemap-stat">
+                        <a href="#">Štatistika</a>
+                    </li>
+                    <li id="menu-crimemap-map">
+                        <a href="#">Crowd mapa</a>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">O projekte</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Anotácia</a></li>
+                            <li><a href="#">Členovia tímu</a></li>
+                            <li><a href="#">OpenData</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="right">
+                    <li><a href="#">DEMO</a></li>
+                </ul>
+            </section>
+        </nav>
+
+        <div class="magellan-container" data-magellan-expedition="fixed">
+            <dl class="sub-nav">
+                <dd data-magellan-arrival="about"><a href="#about">O aplikácii</a></dd>
+                <dd data-magellan-arrival="data"><a href="#data">Dáta</a></dd>
+                <dd data-magellan-arrival="region"><a href="#region">Kraje</a></dd>
+                <dd data-magellan-arrival="year"><a href="#year">Roky</a></dd>
+                <dd data-magellan-arrival="type"><a href="#type">Typy</a></dd>
+                <dd data-magellan-arrival="feature"><a href="#feature">Veličiny</a></dd>
+            </dl>
+        </div>
+
+
+        <div class="row">
+            <div class="column small-6">
+                <h2 id="about" data-magellan-destination="about">O aplikácii</h2>
+                <p>Tento projekt interaktívne prezentuje aktuálne informácie o kriminalite v SR verejne dostupné na stránkach <a href="http://www.minv.sk/?statistika-kriminality-v-slovenskej-republike-xml">Ministerstva vnútra SR</a>.
+                    Tieto informácie obsahujú detailné štatistiky o kriminalite podľa typu, časového obdobia a regionálneho členenia v počtoch trestných činov a osôb v absolútnych číslach.</p>
+                <p>Samotná vizualizácia okrem týchto dát prepočítava poskytované informácie aj na počet obyvateľov v danom roku. Dáta o počte obyateľov sme získali zo <a href="http://px-web.statistics.sk/PXWebSlovak/">Štatistického úradu SR</a>,
+                    hranice krajov SR z <a href="http://wiki.freemap.sk/HraniceAdministrativnychUzemi">freemap.sk</a></p>
+                <p>Zo štatistík sú vynechané trestné činy zistené Železničnou políciou, Vojenskou políciou, Zborom väzenskej a justičnej stráže a Colným riaditeľstvom, keďže tieto sa nedajú lokalizovať do krajov.</p>
+            </div>
+            <div class="column small-6"></div>
+        </div>    
+
+        <div class="row">
+            <div class="column small-6">
+                <p>V hornej časti obrazovky sa nachádza titulka s aktuálnym stavom filtra hodnotou prislúchajúcou zolenému filtru.
+                    Samotná vizualizácia je rozdelená na 4 komponenty, kde každá časť reprezentuje určitý pohľad na údaje:</p>
+                <ul>
+                    <li>Regionálne členenie (kraje SR)</li>
+                    <li>Typ kriminality</li>
+                    <li>Časové ohraničenie</li>
+                    <li>Sledovaná veličina</li>
+                </ul>
+                <p>Každý takýto komponent zároveň slúži aj ako ovládací prvok pomocou ktorého je možné filtrovať údaje v rovine daného pohľadu.
+                    Takáto filtrácia sa automaticky aplikuje do všetkých komponentov, takže v každom sú zobrazené údaje podliehajúce vybranému filtru.</p>
+            </div>
+            <div class="column small-6">
+                <img src="../images/cely.png">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column small-6">
+                <p>Každý komponent vo svojej hornej časti obsahuje navyše 3 ovládacie prvky: </p>
+                <ul style="list-style-type:none;">
+                    <li><div style="border-bottom: 7px solid transparent;border-left: 7px solid black;border-top: 7px solid transparent;display: inline-block;}"></div> Spustiť animáciu (postune sa aktivuje filter pre každú hodnotu v komponente)</li>
+                    <li><b>?</b> Otvoriť/Zavrieť pomôcku pre daný komponent.</li>
+                    <li><b>X</b> Zrušiť filter v danom komponente.</li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="column small-6">
+                <h2 id="region" data-magellan-destination="region">Regionálne členenie</h2>
+                <p>Tento komponent slúži na porovnanie a filtráciu zločinnosti podľa krajov SR.
+                    Štatistiku pre konkrétny kraj je možné získať prostredníctvom kliknutia na mapku alebo legendu.
+                    Výber je možné zrušiť opätovným kliknutím na vybraný kraj.</p>
+                
+                <p>Hodnoty kriminality na mape sú reprezentované sýtosťou farby, kde tmavšia farba znamená vyššiu hodnotu kriminality
+                    (pre všetky veličiny, ktoré nie sú uvádzané v percentách, tmavšia farba znamená horšiu hodnotu pre daný kraj).
+                    Pre objektívne porovnanie krajov je vhodné nastaviť veličinu na 1000 obyvateľov za rok, alebo pomernú veličinu (uvádzanú v percentách).</p>
+            </div>
+            <div class="column small-6">
+                <h2>&nbsp;</h2><img src="../images/slovensko.png"></div>
+
+        </div>
+        <div class="row">
+
+
+            <div class="column small-6">
+                <h2  id="year" data-magellan-destination="year">Časové ohraničenie</h2>
+                <p>Tento komponent slúži na porovnanie, sledovanie trendov a filtráciu zločinnosti podľa rokov. Štatistiku pre konkrétny rok je možné získať prostredníctvom kliknutia na stĺpec v grafe. Výber je možné zrušiť opätovným kliknutím na vybraný rok. </p>
+                
+                <p>Hodnoty kriminality sú v stĺpcovom grafe reprezentované výškou stĺpca, kde vyšší stĺpec znamená vyššiu hodnotu kriminality (pre všetky veličiny, ktoré nie sú uvádzané v percentách, teda vyšší stĺpec znamená horšiu hodnotu).</p>
+            </div>
+
+            <div class="column small-6">
+                <h2>&nbsp;</h2><img src="../images/graf_rokov.png"></div>
+
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="column small-6">
+                <h2  id="type" data-magellan-destination="type">Členenie podľa typu kriminality</h2>
+                <p>Tento komponent slúži na porovnanie a filtráciu zločinnosti podľa typu zločinu. Legenda na ľavej strane a vnútorné medzikružie reprezentujú skupiny typov kriminality, vonkajšie medzikružie a pravá strana legendy reprezentujú typy kriminality prislúchajúce jednotlivým skupinám. Štatistiku pre požadovanú skupinu alebo typ kriminality je možné získať prostredníctvom kliknutia na medzikružie alebo legendu.</p>
+                <p>Hodnoty pre jednotivé typy kriminality sú reprezentované veľkosťou výseku medzikružia, kde väčší výsek znamená vyšší podiel daného typu kriminality na celkovej kriminalite. Pre všetky veličiny, ktoré nie sú uvádzané v percentách, teda väčší výsek znamená významnejší podiel daného typu kriminality na celkovej kriminalite. Pre veličiny, ktoré sú uvádzané v percentách, nemá veľkosť kruhového výseku štatistický význam.</p>
+            </div>
+
+            <div class="column small-6"> 
+                <h2>&nbsp;</h2><img src="../images/pie_chart.png"></div>
+
+        </div>
+        <div class="row">
+
+            <div class="column small-6">
+                <ul>
+                    <li>Násilná kriminalita: Násilná trestná činnosť je teda taká trestná činnosť, ktorej významnou charakteristikou je fyzické poškodenie alebo usmrtenie konkrétnej osoby (osôb), prípadne prítomnosť zámeru taký následok spôsobiť (pokus ako vývojové štádium trestného činu).</li>
+                    <li>Mravnostná kriminalita: Mravnostná kriminalita zahŕňa trestné činy spojené s porušovaním zákonov o mravnosti. Ide o znásilnenie, pohlavné zneužívanie, ohrozovanie mravnosti, kupliarstvo a pod.</li>
+                    <li>Majetková kriminalita: V užšom slova zmysle majetkovou kriminalitou rozumieme trestnú činnosť, pri ktorej trestne zodpovedný páchateľ bez ohľadu na spôsob spáchania trestného činu, formou vlastníctva majetku, tento majetok  ohrozuje, alebo ho poškodí resp. sa ho zmocní s cieľom trvalého alebo dočasného užívania, pričom konečným cieľom páchateľa je získanie neoprávneného majetkového prospechu pre seba alebo pre inú osobu.</li>
+                </ul>
+            </div>
+            <div class="column small-6">
+                <ul>
+                    <li>Spoločenská kriminalita: Spoločenská kriminalita zahrňuje trestné činy, ktorých dopad má vplyv na spoločnosť a jej okolie. Jedná sa napríklad o trestné činy ako výtržníctvo, podpalačstvo, výroba a distribúcia drog, nedovolené ozbrojovanie, atď.</li>
+                    <li>Ekonomická kriminalita: Pod pojmom ekonomická kriminalita treba rozumieť trestné činy hospodárske a trestné činy proti majetku. Medzi najčastejšie oblasti páchania tejto trestnej činnosti daňové úniky, podvody vo všetkých formách, úverové, poisťovacie a trestné činy súvisiace s procesom privatizácie, a samozrejme legalizácia príjmov z trestnej činnosti. </li>
+                    <li>Zostávajúca kriminalita: Zostávajúca kriminalita zahrňuje všetky ostatné nezaradené trestné činy ako napríklad, trestné činy vojenské alebo trestné činy proti republike, ale aj trestné činy vyplývyjúce z dopravných nehôd a pod.</li>
+                </ul>
+            </div>
+
+
+
+
+
+        </div>
+
+        <div class="row">
+
+            <div class="column small-6">
+                <h2  id="feature" data-magellan-destination="feature">Sledovaná veličina</h2>
+                <p>Tento komponent slúži na výber veličiny, prostredníctvom ktorej je možné porovnávať kriminalitu. Dostupné veličiny sú buď hodnoty nejakého ukazovateľa, alebo pomery týchto hodnôt (percentá). Pre veličiny, ktoré nie sú pomerom ukazovateľov, je možné aktivovať buď Absolútne hodnoty (t.j súčty), alebo Hodnoty na 1000 obyvateľov za rok.</p>
+                <p>Štatistiku pre požadovanú veličinu je možné získať prostredníctvom kliknutia na text alebo pruhový graf. Výber nie je možné zrušiť, vždy musí byť vo výbere práve jedna veličina. Pre veličiny, ktoré nie sú pomerom ukazovateľov, je možné aktivivať Absolútnu hodnotu alebo Hodnotu na 1000 obyvateľov za rok v hornej časti komponentu.</p>
+                <p>Hodnoty ukazovateľov v rámci jednotlivých veličín sú reprezentované v pruhovom grafe veľkosťou prislúchajúceho pruhu, kde väčší pruh znamená vyššiu hodnotu veličiny. Jednotlivé hodnoty je možné porovnávať len medzi veličinami v jednom podgrafe.</p>
+            </div>
+            <div class="column small-6"> 
+                <h2>&nbsp;</h2><img src="../images/velicina.png"></div>
+
+
+        </div>
+        <div class="row">
+
+            <div class="column small-6">
+                <h2  id="faq" data-magellan-destination="faq">FAQ</h2>
+                <ul>
+                    <li><i>Aký je rozdiel medzi krádežou v ekonomickej a majetkovej kriminalite?</i>
+                        Krádeže v ekonomickej sú trestné činy voči právnickým subjektom v oblasti železníc (napr. krádeže medených káblov), ciest ( krádeže dopravných značiek, zvodidiel), pôšt a vodnej  a leteckej dopravy. Krádeže v majetkovej sú tie ostatné.</li>
+                </ul>
+            </div>
+            <div class="column small-6">&nbsp;</div>
+        </div>
+        <!-- build:include:deploy template_footer.html -->
+
+        <div class="footer">
+            <div class="row">
+                <div class="column small-centered text-center">
+                    Copyright © 2014 &nbsp;&nbsp;&nbsp;&nbsp;<a href="opendata.sk">Opendata.sk</a>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
+<!-- /build -->

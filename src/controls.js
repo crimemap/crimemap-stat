@@ -127,7 +127,6 @@ function controls(d3node,fields,step,finish,texts){
         .classed({"tiny":true,"button":true,"secondary":true})
         .on("click",play)
         .html("&nbsp;&nbsp;play");
-//    playDiv.append("span").classed({"fi-play":true,"size-21":true});
         
 
     var pauseDiv = controlsList.append("li")
@@ -135,19 +134,16 @@ function controls(d3node,fields,step,finish,texts){
         .style("display","none")
         .on("click",pause)
         .text("pause");
-//        pauseDiv.append("span").classed({"fi-pause":true,"size-21":true});
 
 
     var helpDiv = controlsList.append("li")
         .classed({"tiny":true,"button":true,"secondary":true})
         .attr("data-reveal-id",modalId).text("help");
-//        .append("a").attr("href","#").attr("data-reveal-id",modalId).text("help");
 
     var cancelDiv = controlsList.append("li")
         .classed({"tiny":true,"button":true,"secondary":true})
         .on("click",cancel)
         .text("cancel");
-//    cancelDiv.append("span").classed({"fi-x":true,"size-21":true});
 
     return {
         isPlaying: function(){

@@ -18,7 +18,6 @@
 window.onload= crimeMap;
 function crimeMap(){
     
-
     
 var locale = d3.locale({
   "decimal": ",",
@@ -437,7 +436,7 @@ function onLoad(data){
 
     fp.done();
 
-    
+    init();
 }
 }
 
