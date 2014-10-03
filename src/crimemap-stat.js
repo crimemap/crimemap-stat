@@ -303,9 +303,6 @@ function onLoad(data){
             return p;
         };    
     }
-    
-    
-
 
     var records = crossfilter(data),
     all = records.groupAll().reduce(reduceAdd(),reduceRemove(),initialization).value();
@@ -390,19 +387,12 @@ function onLoad(data){
 
     var chart = d3.selectAll(".chart").data(charts);
 
-
     var urlResolverVar = urlResolver()
                 .components(charts.concat(indexingComponentVar,featureChartsVar));
         
     var dataDownloaderVar = dataDownloader()
-                .dimension(yearDim);        
+                .dimension(yearDim);       
         
-//    var fil = [charts[0].filter,
-//               charts[1].filter,
-//               charts[2].filter0,
-//               charts[2].filter1,
-//               chart.applyParam];
-
     function render(method) { 
         d3.select(this).call(method);
     }
@@ -414,19 +404,10 @@ function onLoad(data){
         dataDownloaderVar();
     }
    
-//   function filter (filters) {
-//        for(var i=0;i<filters.length;i++){
-//            fil[i](filters[i]);
-//        }
-//        renderAll();
-//    };
-   
-//    function reset(i) { charts[i].filter(null); renderAll();};   
    
     var modal = $('#myModal');
     window.interest = function(codedparams){
         modal.foundation('reveal', 'close');
-//        filter(arr);
         urlResolverVar.decodeUrl(codedparams)
         renderAll();
     };

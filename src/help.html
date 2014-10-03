@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-        <title> </title>
+<meta name="viewport" content="width=device-width">
+<title>Mapazločinu - štatistika pomocník</title>
+        
+<!-- build:include header_build.html -->
+        
         <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation/css/normalize.css">
         <link rel="stylesheet" type="text/css" href="../../crimemap-base/css/app.css">
         <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation-icon-fonts/foundation-icons.css" />
@@ -13,10 +16,15 @@
         <script src="../../crimemap-base/bower_components/foundation/js/foundation.min.js"></script>
 
         <script src="init.js"></script>
+        
+<!-- /build -->
+        
     </head>
     <body onload="init()">
-        <!-- /build -->
+        
 
+        <!-- build:include ../../crimemap-base/html/navigation.html -->
+        
         <nav class="top-bar" data-topbar role="navigation">
             <ul class="title-area">
                 <li class="name">
@@ -31,7 +39,7 @@
                     <li id="menu-crimemap-stat">
                         <a href="#">Štatistika</a>
                     </li>
-                    <li id="menu-crimemap-map">
+                    <li id="menu-crimemap-stat">
                         <a href="#">Crowd mapa</a>
                     </li>
                     <li class="has-dropdown">
@@ -48,6 +56,8 @@
                 </ul>
             </section>
         </nav>
+        
+        <!-- /build -->
 
         <div class="magellan-container" data-magellan-expedition="fixed">
             <dl class="sub-nav">
@@ -86,8 +96,8 @@
                 <p>Každý takýto komponent zároveň slúži aj ako ovládací prvok pomocou ktorého je možné filtrovať údaje v rovine daného pohľadu.
                     Takáto filtrácia sa automaticky aplikuje do všetkých komponentov, takže v každom sú zobrazené údaje podliehajúce vybranému filtru.</p>
             </div>
-            <div class="column small-6">
-                <img src="../images/cely.png">
+            <div class="column small-6">f
+                <img src="../../crimemap-stat/images/cely.png" alt="all">
             </div>
         </div>
 
@@ -114,7 +124,7 @@
                     Pre objektívne porovnanie krajov je vhodné nastaviť veličinu na 1000 obyvateľov za rok, alebo pomernú veličinu (uvádzanú v percentách).</p>
             </div>
             <div class="column small-6">
-                <h2>&nbsp;</h2><img src="../images/slovensko.png"></div>
+                <h2>&nbsp;</h2><img src="../../crimemap-stat/images/slovensko.png" alt="region"></div>
 
         </div>
         <div class="row">
@@ -128,7 +138,7 @@
             </div>
 
             <div class="column small-6">
-                <h2>&nbsp;</h2><img src="../images/graf_rokov.png"></div>
+                <h2>&nbsp;</h2><img src="../../crimemap-stat/images/graf_rokov.png" alt="year"></div>
 
 
         </div>
@@ -143,7 +153,7 @@
             </div>
 
             <div class="column small-6"> 
-                <h2>&nbsp;</h2><img src="../images/pie_chart.png"></div>
+                <h2>&nbsp;</h2><img src="../../crimemap-stat/images/pie_chart.png" alt="typ"></div>
 
         </div>
         <div class="row">
@@ -178,7 +188,7 @@
                 <p>Hodnoty ukazovateľov v rámci jednotlivých veličín sú reprezentované v pruhovom grafe veľkosťou prislúchajúceho pruhu, kde väčší pruh znamená vyššiu hodnotu veličiny. Jednotlivé hodnoty je možné porovnávať len medzi veličinami v jednom podgrafe.</p>
             </div>
             <div class="column small-6"> 
-                <h2>&nbsp;</h2><img src="../images/velicina.png"></div>
+                <h2>&nbsp;</h2><img src="../../crimemap-stat/images/velicina.png" alt="velicina"></div>
 
 
         </div>
@@ -193,7 +203,8 @@
             </div>
             <div class="column small-6">&nbsp;</div>
         </div>
-        <!-- build:include:deploy template_footer.html -->
+
+        <!-- build:include ../../crimemap-base/html/footer.html -->
 
         <div class="footer">
             <div class="row">
@@ -202,7 +213,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- /build -->
+        
     </body>
 </html>
-<!-- /build -->

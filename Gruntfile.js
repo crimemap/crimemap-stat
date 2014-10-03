@@ -4,7 +4,7 @@ grunt.initConfig({
     clean:  {
         options: {force:true},
         default: '<%=pkg.dest%>',
-        deploy: '<%=pkg.deploy_folder%>'
+        deploy: '<%=pkg.deploy%>'
     },
 
     jshint: { files: ['Gruntfile.js','<%=pkg.src%>/**/*.js'] , options: { force :true } },
@@ -16,22 +16,24 @@ grunt.initConfig({
                 src: ['node_modules/d3/d3.js',
                     'node_modules/crossfilter/crossfilter.js',
                     'node_modules/topojson/topojson.js',
+                    '<%=pkg.src%>/init.js',
                     '<%=pkg.src%>/urlResolver.js',
+                    '<%=pkg.src%>/dataDownloader.js',
                     '<%=pkg.src%>/controls.js',
                     '<%=pkg.src%>/fileProgress.js',
                     '<%=pkg.src%>/indexingComponent.js',
                     '<%=pkg.src%>/title.js',
+                    '<%=pkg.src%>/map.js',                    
                     '<%=pkg.src%>/barsy.js',
                     '<%=pkg.src%>/featureCharts.js',
                     '<%=pkg.src%>/sunburst.js',
-                    '<%=pkg.src%>/map.js',
                     '<%=pkg.src%>/<%=pkg.name%>.js'],
-                dest: '<%= pkg.dest %>/<%= pkg.name %>.js'
+                dest: '<%= pkg.dest %>/<%= pkg.path %>.js'
             },
 
             {
                 src: '<%=pkg.src%>/<%=pkg.name%>.css',
-                dest: '<%=pkg.dest%>/<%=pkg.name%>.css'
+                dest: '<%=pkg.dest%>/<%=pkg.path%>.css'
             }
         ]
 
@@ -42,33 +44,27 @@ grunt.initConfig({
         default: {
             files: [
                 { expand: true, flatten: true, src: 'images/*.png', dest: '<%=pkg.dest%>/images/'},
-                { expand: true, flatten: true, src: ['<%=pkg.src%>/*.json','<%=pkg.src%>/*.csv'], dest: '<%=pkg.dest%>'}
+                { expand: true, flatten: true, src: ['<%=pkg.src%>/*.csv'], dest: '<%=pkg.dest%>'}
             ]
         },
         deploy: {
-            files: [
-                {expand: true, flatten: true,
-                 src: ['<%=pkg.dest%>/<%=pkg.name%>.min.*.css',
-                    '<%=pkg.dest%>/<%=pkg.name%>.min.*.js',
-                    '<%=pkg.dest%>/images/*',
-                    '<%=pkg.dest%>/*.csv'],
-                dest: '<%=pkg.deploy_folder%>/'}
-             ]
+                files: [
+                    {expand: true, cwd:"<%=pkg.dest%>", flatten: false, src: ['**'], dest: '<%=pkg.deploy%>'}
+                ]
         }
     },
 
     uglify: {
         options: { mangle: false, compress: false },
         build: {
-            files: {'<%= pkg.dest %>/<%= pkg.name %>.min.js': ['<%= pkg.dest %>/<%= pkg.name %>.js']}
+            files: {'<%= pkg.dest %>/<%= pkg.path %>.min.js': ['<%= pkg.dest %>/<%= pkg.path %>.js']}
         }
     },
 
     cssmin: {
         compress: {
             files: [
-                {dest: '<%=pkg.dest%>/<%=pkg.name%>.min.css', src: '<%=pkg.dest%>/<%=pkg.name%>.css'},
-                {src: '../../crimemap/static/crimemap/css/main.css', dest: '<%=pkg.dest%>/main.css'}
+                {dest: '<%=pkg.dest%>/<%=pkg.path%>.min.css', src: '<%=pkg.dest%>/<%=pkg.path%>.css'}
             ]
         }
     },
@@ -78,22 +74,41 @@ grunt.initConfig({
             strip: true
         },
         default: {
-            files: { "<%=pkg.dest%>/<%=pkg.name%>.html": ["<%=pkg.src%>/<%=pkg.name%>.html"] }
-        },
-        deploy: {
-            files: { "<%=pkg.html_deploy_folder%>/<%=pkg.name%>.html": ["<%=pkg.src%>/<%=pkg.name%>.html"] }
+            files: [
+             { src: "<%=pkg.src%>/<%=pkg.name%>.html", dest : "<%=pkg.dest%>/index.html" },
+             { src: "<%=pkg.src%>/help.html", dest : "<%=pkg.dest%>/help.html" },
+            ]
         }
     },
-
-    ver: {
-        build: {
-            phases: [
-                { files: ['<%=pkg.dest%>/*.min.js','<%=pkg.dest%>/*.min.css'], references: '<%=pkg.html_deploy_folder%>/<%=pkg.name%>.html'},
-                { files:['<%=pkg.dest%>/*.csv'], references: ['<%=pkg.dest%>/*.js','<%=pkg.html_deploy_folder%>/<%=pkg.name%>.html']}
-            ],
-            versionFile: '<%=pkg.dest%>/<%=pkg.name%>-version.json'
+    
+    
+    'string-replace': {
+            deploy: {
+                files: [
+                    {expand:true, cwd: "<%=pkg.deploy%>", src: ['*.js','*.css','*.html'], dest: '<%=pkg.deploy%>'}
+                ],
+                options: {
+                    replacements: [
+                        {pattern: /\.\.\/\.\.\/crimemap-base\/dist/gi, replacement: "/base"},
+                        {pattern: /\.\.\/\.\.\/crimemap-home\/dist/gi, replacement: "/home"},
+                        {pattern: /\.\.\/\.\.\/crimemap-stat\/dist/gi, replacement: "/stat"},
+                        {pattern: /\.\.\/\.\.\/crimemap-map\/dist/gi, replacement: "/map"}
+                            ]
+                }
+            }
         }
-    }
+    
+//    ,
+//
+//    ver: {
+//        build: {
+//            phases: [
+//                { files: ['<%=pkg.dest%>/*.min.js','<%=pkg.dest%>/*.min.css'], references: '<%=pkg.html_deploy_folder%>/<%=pkg.name%>.html'},
+//                { files:['<%=pkg.dest%>/*.csv'], references: ['<%=pkg.dest%>/*.js','<%=pkg.html_deploy_folder%>/<%=pkg.name%>.html']}
+//            ],
+//            versionFile: '<%=pkg.dest%>/<%=pkg.name%>-version.json'
+//        }
+//    }
 });
 
 grunt.registerTask('default', [], function () {
@@ -116,10 +131,11 @@ grunt.registerTask('deploy', [], function () {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-processhtml');
+    grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-ver');
 
-    grunt.task.run('clean:default','jshint','concat','copy:default','uglify','cssmin',
-                    'clean:deploy','processhtml:deploy','ver','copy:deploy');
+    grunt.task.run('clean:default','jshint','concat','copy:default','uglify','cssmin','processhtml:default',
+                    'clean:deploy','copy:deploy','string-replace:deploy');
 });
 
 };

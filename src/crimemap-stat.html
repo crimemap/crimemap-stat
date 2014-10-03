@@ -1,12 +1,11 @@
-<!-- build:include:deploy template_header.html -->
-<!-- /build -->
-<!-- build:include:default dist_header.html -->
-<!-- /build -->
-<!-- build:remove -->
 <!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title> </title>
+<title>Mapazločinu - štiatistika</title>
+
+<!-- build:include header_build.html -->
+
+
 <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation/css/normalize.css">
 <link rel="stylesheet" type="text/css" href="../../crimemap-base/css/app.css">
 <link rel="stylesheet" type="text/css" href="crimemap-stat.css">
@@ -33,10 +32,13 @@
 <script src="sunburst.js"></script>
 <script src="listRecords.js"></script>
 <script src="crimemap-stat.js"></script>
-</head>
-<body>
+
 <!-- /build -->
 
+</head>
+<body>
+
+    <!-- build:include ../../crimemap-base/html/navigation.html -->
 
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
@@ -69,6 +71,8 @@
           </ul>
         </section>
     </nav>
+    
+    <!-- /build -->
 
     <div id="stat-wrapper">
         <div id="file_result"></div>
@@ -164,7 +168,7 @@
     </div>
 
 
-<!-- build:include:deploy template_footer.html -->
+    <!-- build:include ../../crimemap-base/html/footer.html -->
 
     <div class="footer">
         <div class="row">
@@ -173,7 +177,8 @@
             </div>
         </div>
     </div>
+    
+    <!-- /build -->
 
 </body>
 </html>
-<!-- /build -->

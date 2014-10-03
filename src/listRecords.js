@@ -48,48 +48,6 @@ function listRecords() {
             .text(function(d){return d3.values(d)+",";});
 
         records.exit().remove();
-
-//        records.selectAll(".props")
-//                .data(function(d){
-//                    return d3.values(d);
-//                })
-//                .enter()
-//                .append("div")
-//                .attr("class","props");
-//        
-//        records.selectAll(".props")
-//                .text(function(d){
-//                    return d;
-//                });
-//
-//        recordEnter.append("div")
-//                .attr("class", "origin")
-//                .text(function(d) {
-//                    return d.origin;
-//                });
-//
-//        recordEnter.append("div")
-//                .attr("class", "destination")
-//                .text(function(d) {
-//                    return d.destination;
-//                });
-//
-//        recordEnter.append("div")
-//                .attr("class", "distance")
-//                .text(function(d) {
-//                    return formatNumber(d.distance) + " mi.";
-//                });
-//
-//        recordEnter.append("div")
-//                .attr("class", "delay")
-//                .classed("early", function(d) {
-//                    return d.delay < 0;
-//                })
-//                .text(function(d) {
-//                    return formatChange(d.delay) + " min.";
-//                });
-
-
         
     }
 
