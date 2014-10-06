@@ -96,7 +96,13 @@ function urlResolver() {
     chart.decodeUrl = function(_) {
         var params = {};
         if (!arguments.length){
-            params = decodeParams(location.search.substr(1));
+            var search;
+            if(location.search[location.search.length-1]==="/"){
+                search = location.search.substr(1,location.search.length-2);
+            }else{
+                search= location.search.substr(1);
+            }
+            params = decodeParams(search);
         }else{
             params = decodeParams(_);
         }
