@@ -125,12 +125,12 @@ function barsy(widthTotal,heightTotal) {
           
             svg.select(".x.axis").call(xAxis)
                     .selectAll("text")  
-//                    .style("text-anchor", "end")
-//                    .attr("dx", "-.8em")
-//                    .attr("dy", ".15em")
-//                    .attr("transform", function(d) {
-//                        return "rotate(-65)" 
-//                        });
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", function(d) {
+                        return "rotate(-65)"; 
+                        });
             
             g.selectAll(".tick text")
                         .on("click",mouseclick)

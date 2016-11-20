@@ -70,13 +70,13 @@ function title(chartTitles) {
     divs.value = divContainer.append("span").classed({"titleHeader":true});
 //            .append("h3").classed({"title":true});
     
-    var divContainer2= div.append("div")
+    var divContainer2= div.append("div");
             //.append("ul").attr("class","inline-list");
 
     var subTitleDiv = divContainer2.append("div").classed({"subTitleHeader":true,"subheader":true});
                 
     for(var i=0;i<arr.length;i++){
-        divs[arr[i]]=divContainer2.append("span")//.append("li").append("h4").attr("class","subheader");
+        divs[arr[i]]=divContainer2.append("span");//.append("li").append("h4").attr("class","subheader");
     }
     
     function chart(){
@@ -142,7 +142,7 @@ function title(chartTitles) {
                 texts.typeGroupsText = labels.typeGroups[d];
                 texts.typeGroupsTextInflected = texts.typeGroupsText + " kriminalita";
             }
-            return //texts.typeGroupsText;
+            return; //texts.typeGroupsText;
         });
 
         texts.tp = texts.typeGroupsText?texts.typeGroupsTextInflected:texts.typesText;

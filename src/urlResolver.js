@@ -19,7 +19,7 @@ function urlResolver() {
     
     var components = [],params = {};
     
-    var div = d3.select("#urlResolver")
+    var div = d3.select("#urlResolver");
             
     var urlResolverClickable = d3.select(document.getElementById("urlResolverClickable"))
             .on("click",onUrlClick);

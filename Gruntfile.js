@@ -15,7 +15,7 @@ grunt.initConfig({
             {
                 src: ['node_modules/d3/d3.js',
                     'node_modules/crossfilter/crossfilter.js',
-                    'node_modules/topojson/topojson.js',
+                    'node_modules/topojson/build/topojson.js',
                     '<%=pkg.src%>/init.js',
                     '<%=pkg.src%>/urlResolver.js',
                     '<%=pkg.src%>/dataDownloader.js',
@@ -89,10 +89,10 @@ grunt.initConfig({
                 ],
                 options: {
                     replacements: [
-                        {pattern: /\.\.\/\.\.\/crimemap-base\/dist/gi, replacement: "/base"},
-                        {pattern: /\.\.\/\.\.\/crimemap-home\/dist/gi, replacement: "/home"},
-                        {pattern: /\.\.\/\.\.\/crimemap-stat\/dist/gi, replacement: "/stat"},
-                        {pattern: /\.\.\/\.\.\/crimemap-map\/dist/gi, replacement: "/map"}
+                        {pattern: /\.\.\/\.\.\/crimemap-base\/dist/gi, replacement: "<%=pkg.host%>/base"},
+                        {pattern: /\.\.\/\.\.\/crimemap-home\/dist/gi, replacement: "<%=pkg.host%>/home"},
+                        {pattern: /\.\.\/\.\.\/crimemap-stat\/dist/gi, replacement: "<%=pkg.host%>/stat"},
+                        {pattern: /\.\.\/\.\.\/crimemap-map\/dist/gi, replacement: "<%=pkg.host%>/map"}
                             ]
                 }
             }
