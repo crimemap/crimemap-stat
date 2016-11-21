@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mapazločinu - štatistika pomocník</title>
+        
+<!-- build:include header_build.html -->
+        
+        <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation/css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="../../crimemap-base/css/app.css">
+        <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation-icon-fonts/foundation-icons.css" />
+        <link rel="stylesheet" type="text/css" href="crimemap-stat.css">
+
+        <script src="../../crimemap-base/bower_components/foundation/js/vendor/modernizr.js"></script>
+        <script src="../../crimemap-base/bower_components/foundation/js/vendor/jquery.js"></script>
+        <script src="../../crimemap-base/bower_components/foundation/js/vendor/fastclick.js"></script>
+        <script src="../../crimemap-base/bower_components/foundation/js/foundation.min.js"></script>
+
+        <script src="init.js"></script>
+        
+<!-- /build -->
+        
+    </head>
+    <body onload="init()">
+        
+
+        <!-- build:include navigation.html -->
+        
+    <nav class="top-bar" data-topbar role="navigation">
+      <ul class="title-area">
+        <li class="name">
+          <h1>
+              <a href="http://mapazlocinu.sk">Mapa zločinu</a>
+          </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+        <section class="top-bar-section">
+            <ul class="left" id="menu-crimemap-list">
+                <li>
+                    <a href="about.html">O projekte</a>
+                </li>
+
+                <li class="has-dropdown not-click">
+                    <a href="help.html">Pomocník</a>
+                    <ul class="dropdown">
+                        <li><a href="help.html#data">Dáta</a></li>
+                        <li><a href="help.html#region">Kraje</a></li>
+                        <li><a href="help.html#year">Roky</a></li>
+                        <li><a href="help.html#type">Typy kriminality</a></li>
+                        <li><a href="help.html#feature">Veličiny</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
+        </section>
+    </nav>
+        
+        <!-- /build -->
+
+
+        <div class="row">
+            <div class="column small-6">
+                <h2 id="about" data-magellan-destination="about">O aplikácii</h2>
+                <p>Tento projekt interaktívne prezentuje aktuálne informácie o kriminalite v SR verejne dostupné na stránkach <a href="http://www.minv.sk/?statistika-kriminality-v-slovenskej-republike-xml">Ministerstva vnútra SR</a>.
+                    Tieto informácie obsahujú detailné štatistiky o kriminalite podľa typu, časového obdobia a regionálneho členenia v počtoch trestných činov a osôb v absolútnych číslach.</p>
+                <p>Samotná vizualizácia okrem týchto dát prepočítava poskytované informácie aj na počet obyvateľov v danom roku. Dáta o počte obyateľov sme získali zo <a href="http://px-web.statistics.sk/PXWebSlovak/">Štatistického úradu SR</a>,
+                    hranice krajov SR z <a href="http://wiki.freemap.sk/HraniceAdministrativnychUzemi">freemap.sk</a></p>
+                <p>Zo štatistík sú vynechané trestné činy zistené Železničnou políciou, Vojenskou políciou, Zborom väzenskej a justičnej stráže a Colným riaditeľstvom, keďže tieto sa nedajú lokalizovať do krajov.</p>
+            </div>
+            <div class="column small-6"></div>
+        </div>
+
+        <!-- build:include footer.html -->
+
+        <div class="footer">
+            <div class="row">
+                <div class="column small-centered text-center">
+                    Copyright © 2014 &nbsp;&nbsp;&nbsp;&nbsp;<a href="opendata.sk">Opendata.sk</a>
+                </div>
+            </div>
+        </div>
+        <!-- /build -->
+        
+    </body>
+</html>

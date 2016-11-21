@@ -13,7 +13,12 @@ grunt.initConfig({
       default: {
         files:[
             {
-                src: ['node_modules/d3/d3.js',
+                src: [
+                    'legacyFoundation/js/vendor/modernizr.js',
+                    'legacyFoundation/js/vendor/jquery.js',
+                    'legacyFoundation/js/vendor/fastclick.js',
+                    'legacyFoundation/js/foundation.min.js',
+                    'node_modules/d3/d3.js',
                     'node_modules/crossfilter/crossfilter.js',
                     'node_modules/topojson/build/topojson.js',
                     '<%=pkg.src%>/init.js',
@@ -32,7 +37,9 @@ grunt.initConfig({
             },
 
             {
-                src: '<%=pkg.src%>/<%=pkg.name%>.css',
+                src: ['<%=pkg.src%>/<%=pkg.name%>.css',
+			'legacyFoundation/css/normalize.css',
+			'legacyFoundation/css/app.css'],
                 dest: '<%=pkg.dest%>/<%=pkg.path%>.css'
             }
         ]
@@ -44,7 +51,17 @@ grunt.initConfig({
         default: {
             files: [
                 { expand: true, flatten: true, src: 'images/*.png', dest: '<%=pkg.dest%>/images/'},
-                { expand: true, flatten: true, src: ['<%=pkg.src%>/*.csv'], dest: '<%=pkg.dest%>'}
+                { expand: true, flatten: true, src: ['<%=pkg.src%>/*.csv'], dest: '<%=pkg.dest%>'},
+                { expand: true, flatten: true, src:
+			[
+			 'legacyFoundation/css/images/fi-link.svg',
+			 'legacyFoundation/css/images/fi-download.svg',
+			 'legacyFoundation/css/images/fi-database.svg',
+			 'legacyFoundation/css/images/fi-social-github.svg',
+			 'legacyFoundation/css/images/fi-mail.svg',
+			 'legacyFoundation/css/images/fi-lightbulb.svg'
+			], 
+			dest: '<%=pkg.dest%>/images/' }
             ]
         },
         deploy: {
@@ -77,6 +94,7 @@ grunt.initConfig({
             files: [
              { src: "<%=pkg.src%>/<%=pkg.name%>.html", dest : "<%=pkg.dest%>/index.html" },
              { src: "<%=pkg.src%>/help.html", dest : "<%=pkg.dest%>/help.html" },
+             { src: "<%=pkg.src%>/about.html", dest : "<%=pkg.dest%>/about.html" }
             ]
         }
     },

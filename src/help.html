@@ -23,66 +23,45 @@
     <body onload="init()">
         
 
-        <!-- build:include ../../crimemap-base/html/navigation.html -->
+        <!-- build:include navigation.html -->
         
-        <nav class="top-bar" data-topbar role="navigation">
-            <ul class="title-area">
-                <li class="name">
-                    <h1>
-                        <a href="#">Mapa zločinu</a>
-                    </h1>
+    <nav class="top-bar" data-topbar role="navigation">
+      <ul class="title-area">
+        <li class="name">
+          <h1>
+              <a href="http://mapazlocinu.sk">Mapa zločinu</a>
+          </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+        <section class="top-bar-section">
+            <ul class="left" id="menu-crimemap-list">
+                <li>
+                    <a href="about.html">O projekte</a>
                 </li>
-                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+
+                <li class="has-dropdown not-click">
+                    <a href="help.html">Pomocník</a>
+                    <ul class="dropdown">
+                        <li><a href="help.html#data">Dáta</a></li>
+                        <li><a href="help.html#region">Kraje</a></li>
+                        <li><a href="help.html#year">Roky</a></li>
+                        <li><a href="help.html#type">Typy kriminality</a></li>
+                        <li><a href="help.html#feature">Veličiny</a></li>
+                    </ul>
+                </li>
             </ul>
-            <section class="top-bar-section">
-                <ul class="left" id="menu-crimemap-list">
-                    <li id="menu-crimemap-stat">
-                        <a href="#">Štatistika</a>
-                    </li>
-                    <li id="menu-crimemap-stat">
-                        <a href="#">Crowd mapa</a>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="#">O projekte</a>
-                        <ul class="dropdown">
-                            <li><a href="#">Anotácia</a></li>
-                            <li><a href="#">Členovia tímu</a></li>
-                            <li><a href="#">OpenData</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="right">
-                    <li><a href="#">DEMO</a></li>
-                </ul>
-            </section>
-        </nav>
+            
+        </section>
+    </nav>
         
         <!-- /build -->
 
-        <div class="magellan-container" data-magellan-expedition="fixed">
-            <dl class="sub-nav">
-                <dd data-magellan-arrival="about"><a href="#about">O aplikácii</a></dd>
-                <dd data-magellan-arrival="data"><a href="#data">Dáta</a></dd>
-                <dd data-magellan-arrival="region"><a href="#region">Kraje</a></dd>
-                <dd data-magellan-arrival="year"><a href="#year">Roky</a></dd>
-                <dd data-magellan-arrival="type"><a href="#type">Typy</a></dd>
-                <dd data-magellan-arrival="feature"><a href="#feature">Veličiny</a></dd>
-            </dl>
-        </div>
-
-
         <div class="row">
             <div class="column small-6">
-                <h2 id="about" data-magellan-destination="about">O aplikácii</h2>
-                <p>Tento projekt interaktívne prezentuje aktuálne informácie o kriminalite v SR verejne dostupné na stránkach <a href="http://www.minv.sk/?statistika-kriminality-v-slovenskej-republike-xml">Ministerstva vnútra SR</a>.
-                    Tieto informácie obsahujú detailné štatistiky o kriminalite podľa typu, časového obdobia a regionálneho členenia v počtoch trestných činov a osôb v absolútnych číslach.</p>
-                <p>Samotná vizualizácia okrem týchto dát prepočítava poskytované informácie aj na počet obyvateľov v danom roku. Dáta o počte obyateľov sme získali zo <a href="http://px-web.statistics.sk/PXWebSlovak/">Štatistického úradu SR</a>,
-                    hranice krajov SR z <a href="http://wiki.freemap.sk/HraniceAdministrativnychUzemi">freemap.sk</a></p>
-                <p>Zo štatistík sú vynechané trestné činy zistené Železničnou políciou, Vojenskou políciou, Zborom väzenskej a justičnej stráže a Colným riaditeľstvom, keďže tieto sa nedajú lokalizovať do krajov.</p>
+                <h1>Pomocník</h1>
             </div>
-            <div class="column small-6"></div>
-        </div>    
-
+        </div>
         <div class="row">
             <div class="column small-6">
                 <p>V hornej časti obrazovky sa nachádza titulka s aktuálnym stavom filtra hodnotou prislúchajúcou zolenému filtru.
@@ -96,7 +75,7 @@
                 <p>Každý takýto komponent zároveň slúži aj ako ovládací prvok pomocou ktorého je možné filtrovať údaje v rovine daného pohľadu.
                     Takáto filtrácia sa automaticky aplikuje do všetkých komponentov, takže v každom sú zobrazené údaje podliehajúce vybranému filtru.</p>
             </div>
-            <div class="column small-6">f
+            <div class="column small-6">
                 <img src="../../crimemap-stat/dist/images/cely.png" alt="all">
             </div>
         </div>
@@ -204,7 +183,7 @@
             <div class="column small-6">&nbsp;</div>
         </div>
 
-        <!-- build:include ../../crimemap-base/html/footer.html -->
+        <!-- build:include footer.html -->
 
         <div class="footer">
             <div class="row">
