@@ -1,11 +1,9 @@
 {
   "name": "crimemap-stat",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "src":"src",
   "dest":"dist",
   "path":"stat",
-  "deploy":"/srv/static/stat/",
-  "host":"/u/48359453/static",
   "private":true,
   "description": "Slovakia criminality statistics and vizualization.",
   "keywords": ["slovakia","criminality","statistics","vizualization","d3js","crossfilter","map","topojson"],

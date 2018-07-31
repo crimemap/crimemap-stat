@@ -214,7 +214,7 @@ function barsy(widthTotal,heightTotal) {
       
      function onBarClick(d){
          var x = d3.mouse(this)[0];
-         var position = Math.round(yearScale.invert(x-8));
+         var position = Math.round(yearScale.invert(x-13));
          var year = labels[d[position].key];
          mouseclick(year);
      }

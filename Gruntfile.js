@@ -3,8 +3,7 @@ grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     clean:  {
         options: {force:true},
-        default: '<%=pkg.dest%>',
-        deploy: '<%=pkg.deploy%>'
+        default: '<%=pkg.dest%>'
     },
 
     jshint: { files: ['Gruntfile.js','<%=pkg.src%>/**/*.js'] , options: { force :true } },
@@ -32,12 +31,12 @@ grunt.initConfig({
                     '<%=pkg.src%>/barsy.js',
                     '<%=pkg.src%>/featureCharts.js',
                     '<%=pkg.src%>/sunburst.js',
-                    '<%=pkg.src%>/<%=pkg.name%>.js'],
+                    '<%=pkg.src%>/crimemap-stat.js'],
                 dest: '<%= pkg.dest %>/<%= pkg.path %>.js'
             },
 
             {
-                src: ['<%=pkg.src%>/<%=pkg.name%>.css',
+                src: ['<%=pkg.src%>/crimemap-stat.css',
 			'legacyFoundation/css/normalize.css',
 			'legacyFoundation/css/app.css'],
                 dest: '<%=pkg.dest%>/<%=pkg.path%>.css'
@@ -63,11 +62,6 @@ grunt.initConfig({
 			], 
 			dest: '<%=pkg.dest%>/images/' }
             ]
-        },
-        deploy: {
-                files: [
-                    {expand: true, cwd:"<%=pkg.dest%>", flatten: false, src: ['**'], dest: '<%=pkg.deploy%>'}
-                ]
         }
     },
 
@@ -92,29 +86,13 @@ grunt.initConfig({
         },
         default: {
             files: [
-             { src: "<%=pkg.src%>/<%=pkg.name%>.html", dest : "<%=pkg.dest%>/index.html" },
+             { src: "<%=pkg.src%>/crimemap-stat.html", dest : "<%=pkg.dest%>/index.html" },
              { src: "<%=pkg.src%>/help.html", dest : "<%=pkg.dest%>/help.html" },
              { src: "<%=pkg.src%>/about.html", dest : "<%=pkg.dest%>/about.html" }
             ]
         }
     },
     
-    
-    'string-replace': {
-            deploy: {
-                files: [
-                    {expand:true, cwd: "<%=pkg.deploy%>", src: ['*.js','*.css','*.html'], dest: '<%=pkg.deploy%>'}
-                ],
-                options: {
-                    replacements: [
-                        {pattern: /\.\.\/\.\.\/crimemap-base\/dist/gi, replacement: "<%=pkg.host%>/base"},
-                        {pattern: /\.\.\/\.\.\/crimemap-home\/dist/gi, replacement: "<%=pkg.host%>/home"},
-                        {pattern: /\.\.\/\.\.\/crimemap-stat\/dist/gi, replacement: "<%=pkg.host%>/stat"},
-                        {pattern: /\.\.\/\.\.\/crimemap-map\/dist/gi, replacement: "<%=pkg.host%>/map"}
-                            ]
-                }
-            }
-        }
     
 //    ,
 //
@@ -138,22 +116,6 @@ grunt.registerTask('default', [], function () {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-processhtml');
     grunt.task.run('clean:default','jshint','concat','copy:default','uglify','cssmin','processhtml:default');
-});
-
-grunt.registerTask('deploy', [], function () {
-
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-processhtml');
-    grunt.loadNpmTasks('grunt-string-replace');
-    grunt.loadNpmTasks('grunt-ver');
-
-    grunt.task.run('clean:default','jshint','concat','copy:default','uglify','cssmin','processhtml:default',
-                    'clean:deploy','copy:deploy','string-replace:deploy');
 });
 
 };

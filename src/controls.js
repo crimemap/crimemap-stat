@@ -85,13 +85,13 @@ function controls(d3node,fields,step,finish,texts){
         pause();
         finishInternal();
     }
-    
+
     function enable(){
         if(!playActive){
             controlsList.classed({"disabledInnerMain2":false});
         }
     }
-    
+
     function disable(){
         if(!playActive){
             controlsList.classed({"disabledInnerMain2":true});
@@ -100,7 +100,7 @@ function controls(d3node,fields,step,finish,texts){
 
     d3node.node().addEventListener("mouseenter",enable);
     d3node.node().addEventListener("mouseleave",disable);
-    
+
     //TODO:map does not work if  d3node.select("svg")
     var svgNode = d3node.selectAll("svg");
 
@@ -108,7 +108,7 @@ function controls(d3node,fields,step,finish,texts){
     var helpWindowWidth = svgNode.attr("width");
 
     var modalId = "modal-"+d3node.attr("id");
-    
+
     var helpWindow = d3node.select("#"+modalId);
     helpWindow.append("div").classed({"close-reveal-modal":true}).html("&#215;");
 
@@ -117,9 +117,9 @@ function controls(d3node,fields,step,finish,texts){
         .style({"width":helpWindowWidth+"px"});
 
     var controlsTitle = controlsDiv.append("h5").classed({"subheader":true}).text(texts.chartTitles[d3node.attr("id")]);
-    
+
     var line = controlsDiv.append("hr").classed({"nospace":true});
-    
+
     var controlsList = controlsDiv.append("div").classed({"button-bar":true,"right":true})
             .append("ul").classed({"button-group":true,"disabledInnerMain2":true,"controlsList":true});
 
@@ -127,7 +127,7 @@ function controls(d3node,fields,step,finish,texts){
         .classed({"tiny":true,"button":true,"secondary":true})
         .on("click",play)
         .html("&nbsp;&nbsp;play");
-        
+
 
     var pauseDiv = controlsList.append("li")
         .classed({"tiny":true,"button":true,"secondary":true})
@@ -138,6 +138,7 @@ function controls(d3node,fields,step,finish,texts){
 
     var helpDiv = controlsList.append("li")
         .classed({"tiny":true,"button":true,"secondary":true})
+        .style("display","none")
         .attr("data-reveal-id",modalId).text("help");
 
     var cancelDiv = controlsList.append("li")

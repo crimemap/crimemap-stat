@@ -2,9 +2,9 @@
 <html lang="sk"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>Mapazločinu - štatistika pomocník</title>
-        
+
 <!-- build:include header_build.html -->
-        
+
         <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation/css/normalize.css">
         <link rel="stylesheet" type="text/css" href="../../crimemap-base/css/app.css">
         <link rel="stylesheet" type="text/css" href="../../crimemap-base/bower_components/foundation-icon-fonts/foundation-icons.css" />
@@ -16,15 +16,15 @@
         <script src="../../crimemap-base/bower_components/foundation/js/foundation.min.js"></script>
 
         <script src="init.js"></script>
-        
+
 <!-- /build -->
-        
+
     </head>
     <body onload="init()">
-        
+
 
         <!-- build:include navigation.html -->
-        
+
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
         <li class="name">
@@ -51,23 +51,49 @@
                     </ul>
                 </li>
             </ul>
-            
+
         </section>
     </nav>
-        
+
         <!-- /build -->
 
 
-        <div class="row">
-            <div class="column small-6">
+        <div class="row article">
+            <div class="column large-6">
                 <h2 id="about" data-magellan-destination="about">O aplikácii</h2>
                 <p>Tento projekt interaktívne prezentuje aktuálne informácie o kriminalite v SR verejne dostupné na stránkach <a href="http://www.minv.sk/?statistika-kriminality-v-slovenskej-republike-xml">Ministerstva vnútra SR</a>.
                     Tieto informácie obsahujú detailné štatistiky o kriminalite podľa typu, časového obdobia a regionálneho členenia v počtoch trestných činov a osôb v absolútnych číslach.</p>
                 <p>Samotná vizualizácia okrem týchto dát prepočítava poskytované informácie aj na počet obyvateľov v danom roku. Dáta o počte obyateľov sme získali zo <a href="http://px-web.statistics.sk/PXWebSlovak/">Štatistického úradu SR</a>,
                     hranice krajov SR z <a href="http://wiki.freemap.sk/HraniceAdministrativnychUzemi">freemap.sk</a></p>
                 <p>Zo štatistík sú vynechané trestné činy zistené Železničnou políciou, Vojenskou políciou, Zborom väzenskej a justičnej stráže a Colným riaditeľstvom, keďže tieto sa nedajú lokalizovať do krajov.</p>
+
+
+                <h2>Projekt podporili</h2>
+                <div class="supporters">
+                  <a target="_blank" href="http://eea.sk/"><img src="/images/eea.png" alt="" class="support"></a>
+                  <a target="_blank" href="https://www.eset.sk/"><img src="/images/eset.png" alt="" class="support"></a>
+                  <a target="_blank" href="http://restart.ludialudom.sk/"><img src="/images/restart.png" alt="" class="support"></a>
+                  <a target="_blank" href="http://slovak.slovakia.usembassy.gov/"><img src="/images/us.png" alt="" class="support"></a>
+                </div>
             </div>
-            <div class="column small-6"></div>
+            <div class="column large-6">
+                <h2>Cieľová skupina</h2>
+
+                <h3>Občania SR</h3>
+
+                <p> Lepšie povedomie o svojom okolí
+                    <br> Vyššia transparentnosť polície a úradov
+                    <br> Kontakty na ďalších aktívnych spoluobčanov
+                    <br> Kontakty konkrétnych zodpovedných ľudí na polícii a úradoch
+                </p>
+
+                <h3>Polícia a úrady</h3>
+
+                <p> Nové nástroje pre skvalitnenie ich práce
+                    <br> Lepšia spolupráca s občanmi
+                </p>
+
+              </div>
         </div>
 
         <!-- build:include footer.html -->
@@ -80,6 +106,6 @@
             </div>
         </div>
         <!-- /build -->
-        
+
     </body>
 </html>
